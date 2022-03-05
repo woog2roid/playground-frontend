@@ -4,7 +4,7 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "lib": ["ES2020", "DOM"],
-    "jsx": "react",
+    "jsx": "react-jsx",
     "module": "esnext",
     "moduleResolution": "Node",
     "target": "es5",
