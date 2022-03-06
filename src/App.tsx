@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import loadable from '@loadable/component';
 import { useNavigate, Route, Routes } from 'react-router-dom';
 
-//const Main = loadable(() => import('@pages/Main'));
-//const LogIn = loadable(() => import('@pages/LogIn'));
+const Main = loadable(() => import('@pages/Main'));
+//const Join = loadable(() => import('@pages/Join'));
 const DeviceError = loadable(() => import('@pages/DeviceError'));
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/" element={<Main />} />
       <Route path="/DeviceError" element={<DeviceError />} />
     </Routes>
   );
@@ -28,4 +29,4 @@ function App() {
 
 export default App;
 
-//      <Route path="/" element={<Main />} />
+//<Route path="/join" element={<Join />} />
