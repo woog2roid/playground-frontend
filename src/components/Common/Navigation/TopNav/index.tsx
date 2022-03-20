@@ -1,12 +1,6 @@
-import {
-  Wrapper,
-  Div,
-  SearchWrapper,
-  SearchIconWrapper,
-  StyledInputBase as InputBase,
-} from './style';
+import { Wrapper, Div, SearchWrapper, SearchIconWrapper, StyledInputBase as InputBase } from './style';
 import { Search as SearchIcon } from '@mui/icons-material';
-import Link from '@utils/Link';
+import Link from '@utils/NoneDecorationLink';
 
 function TopNav() {
   return (
