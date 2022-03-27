@@ -19,13 +19,11 @@ function Main() {
       <TopNav />
       <LoginModal
         isLoginModalOpen={isLoginModalOpen}
-        handleLoginModalOpen={handleLoginModalOpen}
         handleLoginModalClose={handleLoginModalClose}
         handleJoinModalOpen={handleJoinModalOpen}
       />
       <JoinModal
         isJoinModalOpen={isJoinModalOpen}
-        handleJoinModalOpen={handleJoinModalOpen}
         handleJoinModalClose={handleJoinModalClose}
         handleLoginModalOpen={handleLoginModalOpen}
       />

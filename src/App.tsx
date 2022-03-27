@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import loadable from '@loadable/component';
 import { useNavigate, Route, Routes } from 'react-router-dom';
 
 const Main = loadable(() => import('@pages/Main'));
-const Join = loadable(() => import('@pages/Join'));
 const DeviceError = loadable(() => import('@pages/DeviceError'));
 const NotFound = loadable(() => import('@pages/NotFound'));
 

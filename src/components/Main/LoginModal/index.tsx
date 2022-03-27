@@ -6,14 +6,12 @@ import { modalStyle } from './style';
 
 type propsType = {
   isLoginModalOpen: boolean;
-  handleLoginModalOpen: () => void;
   handleLoginModalClose: () => void;
   handleJoinModalOpen: () => void;
 };
 
 function Login({
   isLoginModalOpen,
-  handleLoginModalOpen,
   handleLoginModalClose,
   handleJoinModalOpen,
 }: propsType) {
@@ -28,39 +26,36 @@ function Login({
 
   const onSubmit = useCallback(
     async (e) => {
-      /*
       e.preventDefault();
-      if (id === '' || password === '') alert('아이디 혹은 비밀번호를 입력하세요');
-      else {
+      if (id === '' || password === '') {
+        alert('아이디 혹은 비밀번호를 입력하세요');
+      } else {
         await axios
           .post(
-            `${process.env.REACT_APP_SERVER}/auth/login`,
+            `${process.env.REACT_APP_SERVER}/user/login`,
             {
               id: id,
               password: password,
             },
             {
               withCredentials: true,
-              credentials: 'include',
             },
           )
-          .then(async (res) => {})
+          .then((res) => {
+            console.log(res.data);
+            handleLoginModalClose();
+          })
           .catch((err) => {
-            if (err.response.data.message === 'password not matched') alert('비밀번호를 확인하세요');
-            else if (err.response.data.message === 'id not found') alert('아이디를 확인하세요');
-            else alert('서버와의 통신 오류가 발생했습니다.');
+            alert(`로그인에 실패했습니다.\n아이디와 비밀번호를 확인해주세요.`);
           });
-        }
-        */
+      }
     },
-    [
-      /*id, password*/
-    ],
+    [id, password],
   );
 
   return (
     <Modal open={isLoginModalOpen}>
-      <Box component="form" onSubmit={onSubmit} sx={modalStyle}>
+      <Box component="form" noValidate onSubmit={onSubmit} sx={modalStyle}>
         <TextField
           margin="normal"
           required

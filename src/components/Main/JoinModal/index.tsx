@@ -6,14 +6,12 @@ import { modalStyle, IsSatisfied } from './style';
 
 type propsType = {
   isJoinModalOpen: boolean;
-  handleJoinModalOpen: () => void;
   handleJoinModalClose: () => void;
   handleLoginModalOpen: () => void;
 };
 
 function Join({
   isJoinModalOpen,
-  handleJoinModalOpen,
   handleJoinModalClose,
   handleLoginModalOpen,
 }: propsType) {
@@ -73,14 +71,14 @@ function Join({
             },
             {
               withCredentials: true,
-              //credentials: 'include',
             },
           )
-          .then(() => {
+          .then((res) => {
+            console.log(res.data);
             handleJoinModalClose();
           })
           .catch(() => {
-            alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+            alert('회원가입에 실패했습니다.\n잠시 후에 다시 시도해주세요.');
           });
       }
     },
