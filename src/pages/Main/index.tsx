@@ -11,17 +11,17 @@ import JoinModal from '@components/Main/JoinModal';
 function Main() {
   const { data: userData, error, mutate } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
 
-  const [isLoginModalOpen, setLoginModalState] = useState(true);
+  const [isLoginModalOpen, setLoginModalState] = useState(false);
   const [isJoinModalOpen, setJoinModalState] = useState(false);
 
   useEffect(() => {
     console.log('리렌더링이 얼마나 되는지 확인');
     if (userData) {
       setLoginModalState(false);
-    } else {
+    } else if (error) {
       setLoginModalState(true);
     }
-  }, [userData]);
+  }, [userData, error]);
 
   return (
     <>
