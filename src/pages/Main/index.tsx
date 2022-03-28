@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+import fetcher from '@utils/swrFetcehr';
+import { IUser } from '@utils/dbTypes';
 
 import TopNav from '@components/Common/Navigation/TopNav';
 import BottomNav from '@components/Common/Navigation/BottomNav';
@@ -6,26 +9,32 @@ import LoginModal from '@components/Main/LoginModal';
 import JoinModal from '@components/Main/JoinModal';
 
 function Main() {
-  const [isLoginModalOpen, setLoginModalState] = useState(true);
-  const handleLoginModalOpen = () => setLoginModalState(true);
-  const handleLoginModalClose = () => setLoginModalState(false);
+  const { data: userData, error, mutate } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
 
+  const [isLoginModalOpen, setLoginModalState] = useState(true);
   const [isJoinModalOpen, setJoinModalState] = useState(false);
-  const handleJoinModalOpen = () => setJoinModalState(true);
-  const handleJoinModalClose = () => setJoinModalState(false);
+
+  useEffect(() => {
+    console.log('리렌더링이 얼마나 되는지 확인');
+    if (userData) {
+      setLoginModalState(false);
+    } else {
+      setLoginModalState(true);
+    }
+  }, [userData]);
 
   return (
     <>
       <TopNav />
       <LoginModal
         isLoginModalOpen={isLoginModalOpen}
-        handleLoginModalClose={handleLoginModalClose}
-        handleJoinModalOpen={handleJoinModalOpen}
+        handleLoginModalClose={() => setLoginModalState(false)}
+        handleJoinModalOpen={() => setJoinModalState(true)}
       />
       <JoinModal
         isJoinModalOpen={isJoinModalOpen}
-        handleJoinModalClose={handleJoinModalClose}
-        handleLoginModalOpen={handleLoginModalOpen}
+        handleJoinModalClose={() => setJoinModalState(false)}
+        handleLoginModalOpen={() => setLoginModalState(true)}
       />
 
       <BottomNav />
