@@ -25,6 +25,11 @@ export const Div = styled.div`
     font-weight: 700;
   }
 
+  & > .welcome-text {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
   & > .hover {
     &: hover {
       background-color: ${Color.TransparentBlue};

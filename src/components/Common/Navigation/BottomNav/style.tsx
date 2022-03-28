@@ -9,6 +9,8 @@ export const Wrapper = styled.div`
 `;
 
 export const Div = styled.div`
+  width: 150px;
+
   & > .nav-items {
     display: inline-block;
     padding: 5px 5px 5px 5px;

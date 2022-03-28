@@ -1,5 +1,5 @@
 import { Wrapper, Div } from './style';
-import { Home, People } from '@mui/icons-material';
+import { Home, People, Menu } from '@mui/icons-material';
 import Footer from '@components/Common/Footer';
 
 function BottomNav() {
@@ -9,10 +9,11 @@ function BottomNav() {
         <Home fontSize="large" className="nav-items hover" />
       </Div>
       <Div>
-        <Footer/>
+        <Footer />
       </Div>
       <Div>
         <People fontSize="large" className="nav-items hover" />
+        <Menu fontSize="large" className="nav-items hover" />
       </Div>
     </Wrapper>
   );

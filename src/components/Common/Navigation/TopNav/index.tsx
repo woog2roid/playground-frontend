@@ -1,8 +1,13 @@
 import { Wrapper, Div, SearchWrapper, SearchIconWrapper, StyledInputBase as InputBase } from './style';
 import { Search as SearchIcon } from '@mui/icons-material';
 import Link from '@utils/NoneDecorationLink';
+import useSWR from 'swr';
+import fetcher from '@utils/swrFetcehr';
+import { IUser } from '@utils/dbTypes';
 
 function TopNav() {
+  const { data: userData } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
+
   return (
     <Wrapper>
       <Div>
@@ -14,9 +19,13 @@ function TopNav() {
         </Link>
       </Div>
       <Div>
-        <Link to="./myprofile" className="topnav-items hover">
-          내 정보
-        </Link>
+        {userData ? (
+          <span className="welcome-text">
+            {userData.nickname}({userData.id})님 환영합니다.
+          </span>
+        ) : (
+          <span></span>
+        )}
         <div className="topnav-items">
           <SearchWrapper>
             <SearchIconWrapper>
