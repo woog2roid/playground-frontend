@@ -3,6 +3,9 @@ import { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { Box, TextField, Button, Modal, Grid, Link } from '@mui/material';
 import { modalStyle, IsSatisfied } from './style';
+import useSWR from 'swr';
+import fetcher from '@utils/swrFetcehr';
+import { IUser } from '@utils/dbTypes';
 
 type propsType = {
   isJoinModalOpen: boolean;
@@ -10,11 +13,9 @@ type propsType = {
   handleLoginModalOpen: () => void;
 };
 
-function Join({
-  isJoinModalOpen,
-  handleJoinModalClose,
-  handleLoginModalOpen,
-}: propsType) {
+function Join({ isJoinModalOpen, handleJoinModalClose, handleLoginModalOpen }: propsType) {
+  const { mutate } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
+
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
@@ -46,8 +47,7 @@ function Join({
 
   //비밀번호 체크
   useEffect(() => {
-    const regPassword =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{5,}$/;
+    const regPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{5,}$/;
     if (regPassword.test(password)) setIsPwOk(true);
     else setIsPwOk(false);
   }, [password]);
@@ -58,8 +58,7 @@ function Join({
       e.preventDefault();
       if (!isIdUnique) alert('아이디 중복을 확인해주십시오.');
       else if (!isPwOk) alert('비밀번호를 확인해주십시오.');
-      else if (id === '' || nickname === '')
-        alert('아이디와 별명을 입력하세요.');
+      else if (id === '' || nickname === '') alert('아이디와 별명을 입력하세요.');
       else {
         await axios
           .post(
@@ -75,6 +74,7 @@ function Join({
           )
           .then((res) => {
             console.log(res.data);
+            mutate();
             handleJoinModalClose();
           })
           .catch(() => {
@@ -90,26 +90,13 @@ function Join({
       <Box component="form" noValidate onSubmit={onSubmit} sx={modalStyle}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              label="아이디를 입력하세요"
-              onChange={onChangeId}
-            />
+            <TextField required fullWidth label="아이디를 입력하세요" onChange={onChangeId} />
           </Grid>
           <IsSatisfied isOk={isIdUnique}>
-            {isIdUnique
-              ? '사용 가능한 아이디입니다 :D'
-              : '이미 있는 아이디입니다 :('}
+            {isIdUnique ? '사용 가능한 아이디입니다 :D' : '이미 있는 아이디입니다 :('}
           </IsSatisfied>
           <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              label="비밀번호를 입력하세요"
-              type="password"
-              onChange={onChangePassword}
-            />
+            <TextField required fullWidth label="비밀번호를 입력하세요" type="password" onChange={onChangePassword} />
           </Grid>
           <IsSatisfied isOk={isPwOk}>
             {isPwOk
@@ -117,20 +104,10 @@ function Join({
               : '5글자 이상, 특수문자와 숫자 영문자를 모두 사용하면 더 안전한 비밀번호가 돼요 :('}
           </IsSatisfied>
           <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              label="별명을 입력하세요"
-              onChange={onChangeNickname}
-            />
+            <TextField required fullWidth label="별명을 입력하세요" onChange={onChangeNickname} />
           </Grid>
         </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
           회원가입
         </Button>
         <Grid container>

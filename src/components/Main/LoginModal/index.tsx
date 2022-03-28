@@ -3,6 +3,9 @@ import { useState, useCallback } from 'react';
 import axios from 'axios';
 import { Box, TextField, Button, Modal, Grid, Link } from '@mui/material';
 import { modalStyle } from './style';
+import useSWR from 'swr';
+import fetcher from '@utils/swrFetcehr';
+import { IUser } from '@utils/dbTypes';
 
 type propsType = {
   isLoginModalOpen: boolean;
@@ -10,11 +13,9 @@ type propsType = {
   handleJoinModalOpen: () => void;
 };
 
-function Login({
-  isLoginModalOpen,
-  handleLoginModalClose,
-  handleJoinModalOpen,
-}: propsType) {
+function Login({ isLoginModalOpen, handleLoginModalClose, handleJoinModalOpen }: propsType) {
+  const { mutate } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
+
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const onChangeId = useCallback((e) => {
@@ -43,6 +44,7 @@ function Login({
           )
           .then((res) => {
             console.log(res.data);
+            mutate();
             handleLoginModalClose();
           })
           .catch((err) => {
@@ -56,14 +58,7 @@ function Login({
   return (
     <Modal open={isLoginModalOpen}>
       <Box component="form" noValidate onSubmit={onSubmit} sx={modalStyle}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          label="아이디를 입력하세요"
-          autoFocus
-          onChange={onChangeId}
-        />
+        <TextField margin="normal" required fullWidth label="아이디를 입력하세요" autoFocus onChange={onChangeId} />
         <TextField
           margin="normal"
           required
@@ -73,12 +68,7 @@ function Login({
           autoComplete="current-password"
           onChange={onChangePassword}
         />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
           로그인
         </Button>
         <Grid container>
