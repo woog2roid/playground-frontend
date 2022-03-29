@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import * as React from 'react';
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
 import { IUser } from '@utils/dbTypes';
@@ -8,13 +8,13 @@ import BottomNav from '@components/Common/Navigation/BottomNav';
 import LoginModal from '@components/Main/LoginModal';
 import JoinModal from '@components/Main/JoinModal';
 
-function Main() {
-  const { data: userData, error, mutate } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
+export default function Main() {
+  const { data: userData, error } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
 
-  const [isLoginModalOpen, setLoginModalState] = useState(false);
-  const [isJoinModalOpen, setJoinModalState] = useState(false);
+  const [isLoginModalOpen, setLoginModalState] = React.useState(false);
+  const [isJoinModalOpen, setJoinModalState] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     console.log('리렌더링이 얼마나 되는지 확인');
     if (userData) {
       setLoginModalState(false);
@@ -41,5 +41,3 @@ function Main() {
     </>
   );
 }
-
-export default Main;

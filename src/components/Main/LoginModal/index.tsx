@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import * as React from 'react';
 
 import axios from 'axios';
 import { Box, TextField, Button, Modal, Grid, Link } from '@mui/material';
@@ -13,19 +13,19 @@ type propsType = {
   handleJoinModalOpen: () => void;
 };
 
-function Login({ isLoginModalOpen, handleLoginModalClose, handleJoinModalOpen }: propsType) {
+export default function Login({ isLoginModalOpen, handleLoginModalClose, handleJoinModalOpen }: propsType) {
   const { mutate } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
 
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-  const onChangeId = useCallback((e) => {
+  const [id, setId] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const onChangeId = React.useCallback((e) => {
     setId(e.target.value);
   }, []);
-  const onChangePassword = useCallback((e) => {
+  const onChangePassword = React.useCallback((e) => {
     setPassword(e.target.value);
   }, []);
 
-  const onSubmit = useCallback(
+  const onSubmit = React.useCallback(
     async (e) => {
       e.preventDefault();
       if (id === '' || password === '') {
@@ -88,5 +88,3 @@ function Login({ isLoginModalOpen, handleLoginModalClose, handleJoinModalOpen }:
     </Modal>
   );
 }
-
-export default Login;

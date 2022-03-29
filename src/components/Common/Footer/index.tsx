@@ -1,7 +1,7 @@
 import { Wrapper } from './style';
 import GithubMark from '@images/GitHub-Mark.svg';
 
-function Footer() {
+export default function Footer() {
   return (
     <Wrapper>
       Made By Woog2roid
@@ -11,5 +11,3 @@ function Footer() {
     </Wrapper>
   );
 }
-
-export default Footer;

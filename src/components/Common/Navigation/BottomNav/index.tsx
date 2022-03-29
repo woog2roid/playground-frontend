@@ -2,7 +2,7 @@ import { Wrapper, Div } from './style';
 import { Home, People, Menu } from '@mui/icons-material';
 import Footer from '@components/Common/Footer';
 
-function BottomNav() {
+export default function BottomNav() {
   return (
     <Wrapper>
       <Div>
@@ -18,5 +18,3 @@ function BottomNav() {
     </Wrapper>
   );
 }
-
-export default BottomNav;

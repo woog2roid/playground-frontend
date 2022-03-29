@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import * as React from 'react';
 
 import axios from 'axios';
 import { Box, TextField, Button, Modal, Grid, Link } from '@mui/material';
@@ -13,28 +13,28 @@ type propsType = {
   handleLoginModalOpen: () => void;
 };
 
-function Join({ isJoinModalOpen, handleJoinModalClose, handleLoginModalOpen }: propsType) {
+export default function Join({ isJoinModalOpen, handleJoinModalClose, handleLoginModalOpen }: propsType) {
   const { mutate } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
 
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-  const [nickname, setNickname] = useState('');
+  const [id, setId] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [nickname, setNickname] = React.useState('');
 
-  const onChangeId = useCallback((e) => {
+  const onChangeId = React.useCallback((e) => {
     setId(e.target.value);
   }, []);
-  const onChangePassword = useCallback((e) => {
+  const onChangePassword = React.useCallback((e) => {
     setPassword(e.target.value);
   }, []);
-  const onChangeNickname = useCallback((e) => {
+  const onChangeNickname = React.useCallback((e) => {
     setNickname(e.target.value);
   }, []);
 
-  const [isIdUnique, setIsIdUnique] = useState(true);
-  const [isPwOk, setIsPwOk] = useState(false);
+  const [isIdUnique, setIsIdUnique] = React.useState(true);
+  const [isPwOk, setIsPwOk] = React.useState(false);
 
   //ID 중복 체크
-  useEffect(() => {
+  React.useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_SERVER}/user?id=${id}`)
       .then(() => {
@@ -46,14 +46,14 @@ function Join({ isJoinModalOpen, handleJoinModalClose, handleLoginModalOpen }: p
   }, [id]);
 
   //비밀번호 체크
-  useEffect(() => {
+  React.useEffect(() => {
     const regPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{5,}$/;
     if (regPassword.test(password)) setIsPwOk(true);
     else setIsPwOk(false);
   }, [password]);
 
   //회원가입 요청
-  const onSubmit = useCallback(
+  const onSubmit = React.useCallback(
     async (e) => {
       e.preventDefault();
       if (!isIdUnique) alert('아이디 중복을 확인해주십시오.');
@@ -127,5 +127,3 @@ function Join({ isJoinModalOpen, handleJoinModalClose, handleLoginModalOpen }: p
     </Modal>
   );
 }
-
-export default Join;

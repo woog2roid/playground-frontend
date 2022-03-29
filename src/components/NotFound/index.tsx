@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Wrapper } from './style';
 import { Alert, Button } from '@mui/material';
 
-function DeviceError() {
+export default function DeviceError() {
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -17,5 +17,3 @@ function DeviceError() {
     </Wrapper>
   );
 }
-
-export default DeviceError;

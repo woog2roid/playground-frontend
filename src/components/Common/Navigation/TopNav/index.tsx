@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
 import { IUser } from '@utils/dbTypes';
 
-function TopNav() {
+export default function TopNav() {
   const { data: userData } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
 
   return (
@@ -38,5 +38,3 @@ function TopNav() {
     </Wrapper>
   );
 }
-
-export default TopNav;

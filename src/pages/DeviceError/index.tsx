@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import DeviceErrorComponent from '@components/DeviceError';
 
-function DeviceError() {
+export default function DeviceError() {
   const navigate = useNavigate();
-  useEffect(() => {
+  React.useEffect(() => {
     const size = {
       width: window.innerWidth,
     };
@@ -20,5 +20,3 @@ function DeviceError() {
     </>
   );
 }
-
-export default DeviceError;
