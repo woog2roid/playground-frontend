@@ -15,17 +15,21 @@ export default function Main() {
   const [isJoinModalOpen, setJoinModalState] = React.useState(false);
 
   React.useEffect(() => {
-    console.log('리렌더링이 얼마나 되는지 확인');
-    if (userData) {
-      setLoginModalState(false);
-    } else if (error) {
+    //console.log('리렌더링이 얼마나 되는지 확인');
+    if (error && !isJoinModalOpen) {
+      //로그인이 안되어 있고, 회원가입 중이 아닌경우에만 로그인 모달을 오픈한다.
       setLoginModalState(true);
+    } else if (userData) {
+      setLoginModalState(false);
     }
   }, [userData, error]);
 
   return (
     <>
       <TopNav />
+      <BottomNav />
+
+      {/*모달은 아랫 부분에 위치하도록*/}
       <LoginModal
         isLoginModalOpen={isLoginModalOpen}
         handleLoginModalClose={() => setLoginModalState(false)}
@@ -36,8 +40,6 @@ export default function Main() {
         handleJoinModalClose={() => setJoinModalState(false)}
         handleLoginModalOpen={() => setLoginModalState(true)}
       />
-
-      <BottomNav />
     </>
   );
 }

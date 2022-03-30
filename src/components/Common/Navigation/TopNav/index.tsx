@@ -6,7 +6,7 @@ import fetcher from '@utils/swrFetcehr';
 import { IUser } from '@utils/dbTypes';
 
 export default function TopNav() {
-  const { data: userData } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
+  const { data: userData, error } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
 
   return (
     <Wrapper>
@@ -19,7 +19,7 @@ export default function TopNav() {
         </Link>
       </Div>
       <Div>
-        {userData ? (
+        {userData && !error ? (
           <span className="welcome-text">
             {userData.nickname}({userData.id})님 환영합니다.
           </span>

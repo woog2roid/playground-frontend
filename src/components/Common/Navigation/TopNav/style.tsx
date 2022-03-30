@@ -20,7 +20,7 @@ export const Div = styled.div`
 
     text-decoration: none;
     line-height: 50px;
-    color: ${Color.TransparentBlue};
+    color: ${Color.Blue};
     font-size: 25px;
     font-weight: 700;
   }
@@ -32,8 +32,8 @@ export const Div = styled.div`
 
   & > .hover {
     &: hover {
-      background-color: ${Color.TransparentBlue};
-      color: ${Color.TransparentWhite};
+      background-color: ${Color.Blue};
+      color: ${Color.White};
     }
   }
 `;
@@ -41,7 +41,7 @@ export const Div = styled.div`
 export const SearchWrapper = mstyled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: Color.TransparentWhite,
+  backgroundColor: Color.White,
   marginLeft: 0,
   width: '100%',
 }));
