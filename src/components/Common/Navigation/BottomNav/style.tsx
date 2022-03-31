@@ -16,13 +16,13 @@ export const Div = styled.div`
     padding: 5px 5px 5px 5px;
     margin: -7px 15px 0 15px;
     border-radius: 10%;
-    color: ${Color.TransparentBlue};
+    color: ${Color.Blue};
   }
 
   & > .hover {
     &: hover {
-      background-color: ${Color.TransparentBlue};
-      color: ${Color.TransparentWhite};
+      background-color: ${Color.Blue};
+      color: ${Color.White};
     }
   }
 `;
