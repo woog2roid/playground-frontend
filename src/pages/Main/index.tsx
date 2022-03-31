@@ -16,7 +16,7 @@ export default function Main() {
 
   React.useEffect(() => {
     //console.log('리렌더링이 얼마나 되는지 확인');
-    if (error && !isJoinModalOpen) {
+    if ((!userData?.id || error) && !isJoinModalOpen) {
       //로그인이 안되어 있고, 회원가입 중이 아닌경우에만 로그인 모달을 오픈한다.
       setLoginModalState(true);
     } else if (userData) {
