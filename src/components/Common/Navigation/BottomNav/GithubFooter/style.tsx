@@ -5,6 +5,6 @@ export const Wrapper = styled.div`
   height: 30px;
   text-align: center;
 
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
 `;

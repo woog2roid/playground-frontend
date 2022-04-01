@@ -23,7 +23,7 @@ export default function BottomNav() {
         <Div>
           <Footer />
         </Div>
-        <Div>
+        <Div side="right">
           <People fontSize="large" className="nav-items hover" />
           <Menu fontSize="large" className="nav-items hover" onClick={opneUserMenuDrawer} />
         </Div>

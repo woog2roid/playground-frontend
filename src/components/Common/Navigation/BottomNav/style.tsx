@@ -8,15 +8,23 @@ export const Wrapper = styled.div`
   align-items: center;
 `;
 
-export const Div = styled.div`
-  width: 150px;
-
+type sideProps = {
+  side?: string;
+};
+export const Div = styled.div<sideProps>`
+  display: flex;
+  width: 180px;
+  justify-content: ${(props) => (props?.side === 'right' ? 'flex-end' : 'flex-start')};
   & > .nav-items {
     display: inline-block;
     padding: 5px 5px 5px 5px;
-    margin: -7px 15px 0 15px;
+    margin-top: -7px;
     border-radius: 10%;
     color: ${Color.Blue};
+  }
+
+  .nav-items + .nav-items {
+    margin-left: 15px;
   }
 
   & > .hover {

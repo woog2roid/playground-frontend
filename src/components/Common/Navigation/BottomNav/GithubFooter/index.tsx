@@ -6,7 +6,7 @@ export default function Footer() {
     <Wrapper>
       Made By Woog2roid
       <a href="https://github.com/woog2roid/" target="_blank" rel="noreferrer">
-        <img src={GithubMark} alt="" width="12px" height="12px" />
+        <img src={GithubMark} alt="" width="15px" height="15px" />
       </a>
     </Wrapper>
   );

@@ -7,10 +7,18 @@ const style = css`
     font-family: 'MinSans';
     src: local('MinSans'), url(${MinSans}) format('truetype');
   }
+
   body {
+    padding: 0;
+    margin: 0;
+
     background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(${BackgroundImage});
-    margin: 0.5% 1% 0.5% 1%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
     font-family: 'MinSans';
+
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

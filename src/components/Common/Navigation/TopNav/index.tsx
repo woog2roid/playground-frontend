@@ -11,10 +11,10 @@ export default function TopNav() {
   return (
     <Wrapper>
       <Div>
-        <Link to="./game" className="topnav-items hover">
+        <Link to="./game" className="nav-items hover">
           게임
         </Link>
-        <Link to="./chat" className="topnav-items hover">
+        <Link to="./chat" className="nav-items hover">
           채팅
         </Link>
       </Div>
@@ -26,7 +26,7 @@ export default function TopNav() {
         ) : (
           <span></span>
         )}
-        <div className="topnav-items">
+        <div className="nav-items">
           <SearchWrapper>
             <SearchIconWrapper>
               <SearchIcon />

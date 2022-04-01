@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Div = styled.div`
-  & > .topnav-items {
+  & > .nav-items {
     display: inline-block;
     height: 50px;
     padding: 0 5px 0 5px;
