@@ -5,7 +5,7 @@ import axios from 'axios';
 import fetcher from '@utils/swrFetcehr';
 import { IUser } from '@utils/dbTypes';
 
-import { Box, Drawer, List, Divider, ListItem, ListItemText } from '@mui/material';
+import { Box, Drawer, List, Divider, ListItem } from '@mui/material';
 import { BottomListWrapper } from './style';
 
 type propsType = {

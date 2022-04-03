@@ -13,6 +13,9 @@ export default function App() {
     if (window.innerWidth < 1200) {
       return navigate('./deviceError');
     }
+    if (navigator.userAgent.toLowerCase().indexOf('chrome') === -1) {
+      alert('이 웹앱은 크로미움 환경에서 잘 작동합니다 :D');
+    }
     navigate('/');
   }, []);
 

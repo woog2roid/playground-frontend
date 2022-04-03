@@ -38,7 +38,7 @@ export const Div = styled.div`
   }
 `;
 
-export const SearchWrapper = mstyled('div')(({ theme }) => ({
+export const SearchWrapper = mstyled('form')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: Color.White,
