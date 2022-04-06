@@ -11,7 +11,7 @@ import JoinModal from '@components/Main/JoinModal';
 import Wrapper from '@styles/layouts/MainLayout';
 
 export default function Main() {
-  const { data: userData, error } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
+  const { data: userData, error } = useSWR<IUser>(`/user/me`, fetcher);
 
   const [isLoginModalOpen, setIsLoginModalOpen] = React.useState(false);
   const [isJoinModalOpen, setIsJoinModalOpen] = React.useState(false);

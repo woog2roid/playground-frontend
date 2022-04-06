@@ -1,11 +1,12 @@
 import * as React from 'react';
 
-import axios from 'axios';
-import { Box, TextField, Button, Modal, Grid, Link } from '@mui/material';
-import { modalStyle, IsSatisfied } from './style';
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
+import axios from '@utils/axios';
 import { IUser } from '@utils/dbTypes';
+
+import { Box, TextField, Button, Modal, Grid, Link } from '@mui/material';
+import { modalStyle, IsSatisfied } from './style';
 
 type propsType = {
   isJoinModalOpen: boolean;
@@ -14,7 +15,7 @@ type propsType = {
 };
 
 export default function Join({ isJoinModalOpen, handleJoinModalClose, handleLoginModalOpen }: propsType) {
-  const { mutate } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
+  const { mutate } = useSWR<IUser>(`/user/me`, fetcher);
 
   const [id, setId] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -61,17 +62,11 @@ export default function Join({ isJoinModalOpen, handleJoinModalClose, handleLogi
       else if (id === '' || nickname === '') alert('아이디와 별명을 입력하세요.');
       else {
         await axios
-          .post(
-            `${process.env.REACT_APP_SERVER}/user/join`,
-            {
-              id: id,
-              password: password,
-              nickname: nickname,
-            },
-            {
-              withCredentials: true,
-            },
-          )
+          .post(`/user/join`, {
+            id: id,
+            password: password,
+            nickname: nickname,
+          })
           .then((res) => {
             console.log(res.data);
             mutate();

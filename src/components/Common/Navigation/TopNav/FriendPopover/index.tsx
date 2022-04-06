@@ -25,8 +25,8 @@ export default function FriendPopover({ isOpen, anchorEl, onClose, userData, err
         <span>
           {userData?.nickname}({userData?.id})님에게
         </span>
-        <Button variant="text" onClick={onClickFriendAdd}>
-          친구 요청 보내기
+        <Button variant="text" sx={{fontSize: '16px'}}>
+          <span>친구 요청 보내기</span>
         </Button>
       </Box>
     );

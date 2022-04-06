@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import useSWR from 'swr';
-import axios from 'axios';
+import axios from '@utils/axios';
 import fetcher from '@utils/swrFetcehr';
 import { IUser } from '@utils/dbTypes';
 
@@ -11,7 +11,7 @@ import Link from '@utils/NoneDecorationLink';
 import FriendPopover from './FriendPopover';
 
 export default function TopNav() {
-  const { data: userData, error } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
+  const { data: userData, error } = useSWR<IUser>(`/user/me`, fetcher);
 
   const [anchorElForFriendPopover, setAnchorElForFriendPopover] = React.useState<HTMLElement | null>(null);
   const [isFriendPopoverOpen, setIsFriendPopoverOpen] = React.useState<boolean>(false);
@@ -26,7 +26,7 @@ export default function TopNav() {
     e.preventDefault();
     setAnchorElForFriendPopover(e.currentTarget); //openPopover
     axios
-      .get(`${process.env.REACT_APP_SERVER}/user?id=${e.target.input.value}`)
+      .get(`/user?id=${e.target.input.value}`)
       .then((res) => {
         console.log(res.data);
         setUserDataForFriendPopover(res.data);

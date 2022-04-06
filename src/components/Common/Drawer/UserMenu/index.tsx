@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import useSWR from 'swr';
-import axios from 'axios';
+import axios from '@utils/axios';
 import fetcher from '@utils/swrFetcehr';
 import { IUser } from '@utils/dbTypes';
 
@@ -14,20 +14,14 @@ type propsType = {
 };
 
 export default function UserMenuDrawer({ isOpen, closeDrawer }: propsType) {
-  const { data, error, mutate } = useSWR<IUser>(`${process.env.REACT_APP_SERVER}/user/me`, fetcher);
+  const { data, error, mutate } = useSWR<IUser>(`/user/me`, fetcher);
 
   const onClickLogout = () => {
     //확인 과정
 
     //로그아웃 과정
     axios
-      .post(
-        `${process.env.REACT_APP_SERVER}/user/logout`,
-        {},
-        {
-          withCredentials: true,
-        },
-      )
+      .post(`${process.env.REACT_APP_SERVER}/user/logout`)
       .then(() => {
         mutate();
       })
