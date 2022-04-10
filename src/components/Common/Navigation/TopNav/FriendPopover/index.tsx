@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import axios from '@utils/axios';
 import { IUser } from '@utils/dbTypes';
 
 import { Box, Button, Popover } from '@mui/material';
@@ -18,14 +19,23 @@ export default function FriendPopover({ isOpen, anchorEl, onClose, userData, err
     return <Box sx={{ padding: 1 }}>{errorMessage}</Box>;
   };
 
-  const onClickFriendAdd = () => {};
+  const onClickFriendAdd = React.useCallback(
+    (e) => {
+      e.preventDefault();
+      axios.post('/friend/request', {
+        id: userData?.id,
+      });
+    },
+    [userData],
+  );
+
   const PopOverContent = () => {
     return (
       <Box sx={{ padding: 1.5 }}>
         <span>
           {userData?.nickname}({userData?.id})님에게
         </span>
-        <Button variant="text" sx={{fontSize: '16px'}}>
+        <Button onClick={onClickFriendAdd} variant="text" sx={{ fontSize: '16px' }}>
           <span>친구 요청 보내기</span>
         </Button>
       </Box>
