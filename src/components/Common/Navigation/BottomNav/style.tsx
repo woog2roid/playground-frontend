@@ -17,7 +17,7 @@ export const Div = styled.div<sideProps>`
   justify-content: ${(props) => (props?.side === 'right' ? 'flex-end' : 'flex-start')};
   & > .nav-items {
     display: inline-block;
-    padding: 5px 5px 5px 5px;
+    padding: 0px 5px 0px 5px;
     margin-top: -7px;
     border-radius: 10%;
     color: ${Color.Blue};

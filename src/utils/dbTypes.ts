@@ -3,3 +3,22 @@ export interface IUser {
   nickname: string;
   //createdAt, deletedAt, updatedAt은 무시.
 }
+
+interface friendRelation {
+  follower: {
+    id: string;
+    nickname: string;
+  };
+  following: {
+    id: string;
+    nickname: string;
+  };
+  id: number;
+  friend: boolean;
+}
+
+export interface IFriends {
+  followings?: friendRelation[];
+  followers?: friendRelation[];
+  friends?: friendRelation[];
+}

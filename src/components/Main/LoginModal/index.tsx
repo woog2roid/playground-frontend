@@ -3,7 +3,7 @@ import * as React from 'react';
 import axios from '@utils/axios';
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
-import { IUser } from '@utils/dbTypes';
+import { IUser, IFriends } from '@utils/dbTypes';
 
 import { Box, TextField, Button, Modal, Grid, Link } from '@mui/material';
 import { modalStyle } from './style';
@@ -15,7 +15,8 @@ type propsType = {
 };
 
 export default function Login({ isLoginModalOpen, handleLoginModalClose, handleJoinModalOpen }: propsType) {
-  const { mutate } = useSWR<IUser>(`/user/me`, fetcher);
+  const { userDataMutate } = useSWR<IUser>(`/user/me`, fetcher);
+  const { friendDataMutate } = useSWR<IFriends>(`/friend`, fetcher);
 
   const [id, setId] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -39,7 +40,8 @@ export default function Login({ isLoginModalOpen, handleLoginModalClose, handleJ
           })
           .then((res) => {
             console.log(res.data);
-            mutate();
+            userDataMutate();
+            friendDataMutate();
             handleLoginModalClose();
           })
           .catch((err) => {
