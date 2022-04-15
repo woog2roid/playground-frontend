@@ -40,8 +40,12 @@ export default function BottomNav() {
           <Footer />
         </Div>
         <Div side="right">
-          {friendData?.followers !== undefined && friendData.followers.length > 0 ? (
-            <Badge badgeContent={friendData.followers.length} className="nav-items hover" color="error">
+          {friendData?.followers !== undefined && friendData?.followings !== undefined ? (
+            <Badge
+              badgeContent={`${friendData.followers.length}/${friendData.followings.length}`}
+              className="nav-items hover"
+              color="error"
+            >
               <People fontSize="large" onClick={opneFriendDrawer} />
             </Badge>
           ) : (
