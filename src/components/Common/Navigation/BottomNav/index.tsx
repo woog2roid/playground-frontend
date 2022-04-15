@@ -18,7 +18,7 @@ export default function BottomNav() {
   const closeUserMenuDrawer = () => {
     setIsUserMenuDrawerOpen(false);
   };
-  const opneUserMenuDrawer = () => {
+  const openUserMenuDrawer = () => {
     setIsUserMenuDrawerOpen(true);
   };
 
@@ -47,11 +47,11 @@ export default function BottomNav() {
           ) : (
             <People fontSize="large" className="nav-items hover" onClick={opneFriendDrawer} />
           )}
-          <Menu fontSize="large" className="nav-items hover" onClick={opneUserMenuDrawer} />
+          <Menu fontSize="large" className="nav-items hover" onClick={openUserMenuDrawer} />
         </Div>
       </Wrapper>
 
-      <UserMenuDrawer isOpen={isUserMenuDrawerOpen} closeDrawer={closeUserMenuDrawer} />
+      <UserMenuDrawer isOpen={isUserMenuDrawerOpen} closeDrawer={closeUserMenuDrawer} openDrawer={openUserMenuDrawer} />
       <FriendDrawer isOpen={isFriendDrawerOpen} closeDrawer={closeFriendDrawer} />
     </>
   );

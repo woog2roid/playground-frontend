@@ -1,7 +1,10 @@
 import * as React from 'react';
+
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
 import { IUser } from '@utils/dbTypes';
+
+import { useNavigate } from 'react-router-dom';
 
 import TopNav from '@components/Common/Navigation/TopNav';
 import BottomNav from '@components/Common/Navigation/BottomNav';
@@ -11,16 +14,20 @@ import JoinModal from '@components/Main/JoinModal';
 import Wrapper from '@styles/layouts/MainLayout';
 
 export default function Main() {
+  const navigate = useNavigate();
   const { data: userData, error } = useSWR<IUser>(`/user/me`, fetcher);
 
-  const [isLoginModalOpen, setIsLoginModalOpen] = React.useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = React.useState(true);
   const [isJoinModalOpen, setIsJoinModalOpen] = React.useState(false);
 
   React.useEffect(() => {
-    //console.log('리렌더링이 얼마나 되는지 확인');
-    if ((!userData?.id || error) && !isJoinModalOpen) {
-      //로그인이 안되어 있고, 회원가입 중이 아닌경우에만 로그인 모달을 오픈한다.
-      setIsLoginModalOpen(true);
+    if ((!userData?.id || error) && !isJoinModalOpen && !isLoginModalOpen) {
+      if (error?.status === 404) {
+        setIsLoginModalOpen(true);
+      } else {
+        alert('서버와의 연결이 끊어졌어요.');
+        navigate(0);
+      }
     } else if (userData) {
       setIsLoginModalOpen(false);
     }

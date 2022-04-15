@@ -5,45 +5,56 @@ import axios from '@utils/axios';
 import fetcher from '@utils/swrFetcehr';
 import { IUser } from '@utils/dbTypes';
 
+import { useNavigate } from 'react-router-dom';
+
+import confirm from '@utils/confirm';
 import { Box, Drawer, List, Divider, ListItem } from '@mui/material';
 import { BottomListWrapper } from './style';
 
 type propsType = {
   isOpen: boolean;
   closeDrawer: () => void;
+  openDrawer: () => void;
 };
 
-export default function UserMenuDrawer({ isOpen, closeDrawer }: propsType) {
+export default function UserMenuDrawer({ isOpen, closeDrawer, openDrawer }: propsType) {
+  const navigate = useNavigate();
   const { data, error, mutate } = useSWR<IUser>(`/user/me`, fetcher);
 
-  const onClickLogout = () => {
-    //확인 과정
-
-    //로그아웃 과정
-    axios
-      .post(`${process.env.REACT_APP_SERVER}/user/logout`)
-      .then(() => {
-        mutate();
-      })
-      .catch(() => {
-        alert('서버와의 통신이 원활하지 않아요... :(');
-      });
+  const onClickLogout = async () => {
+    closeDrawer();
+    const isConfirmed = await confirm('로그아웃 하시겠습니까?');
+    if (isConfirmed) {
+      axios
+        .post(`${process.env.REACT_APP_SERVER}/user/logout`)
+        .then(() => {
+          navigate(0);
+        })
+        .catch(() => {
+          alert('서버와의 통신이 원활하지 않아요... :(');
+        });
+    } else {
+      openDrawer();
+    }
   };
 
-  const onClickQuit = () => {
-    //확인 과정
-
-    //회원탈퇴 과정
-    axios
-      .delete(`${process.env.REACT_APP_SERVER}/user/quit`, {
-        withCredentials: true,
-      })
-      .then(() => {
-        mutate();
-      })
-      .catch(() => {
-        alert('서버와의 통신이 원활하지 않아요... :(');
-      });
+  const onClickQuit = async () => {
+    closeDrawer();
+    const isConfirmed = await confirm('정말 탈퇴하시겠습니까?');
+    if (isConfirmed) {
+      axios
+        .delete(`${process.env.REACT_APP_SERVER}/user/quit`, {
+          withCredentials: true,
+        })
+        .then(() => {
+          navigate(0);
+        })
+        .catch(() => {
+          alert('서버와의 통신이 원활하지 않아요... :(');
+        });
+    } else {
+      openDrawer();
+    }
   };
 
   return (

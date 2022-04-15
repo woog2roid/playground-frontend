@@ -71,6 +71,7 @@ export default function Join({ isJoinModalOpen, handleJoinModalClose, handleLogi
             console.log(res.data);
             mutate();
             handleJoinModalClose();
+            handleLoginModalOpen();
           })
           .catch(() => {
             alert('회원가입에 실패했습니다.\n잠시 후에 다시 시도해주세요.');

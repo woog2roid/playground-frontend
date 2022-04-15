@@ -15,8 +15,8 @@ type propsType = {
 };
 
 export default function Login({ isLoginModalOpen, handleLoginModalClose, handleJoinModalOpen }: propsType) {
-  const { userDataMutate } = useSWR<IUser>(`/user/me`, fetcher);
-  const { friendDataMutate } = useSWR<IFriends>(`/friend`, fetcher);
+  const { mutate: userDataMutate } = useSWR<IUser>(`/user/me`, fetcher);
+  const { mutate: friendDataMutate } = useSWR<IFriends>(`/friend`, fetcher);
 
   const [id, setId] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -45,7 +45,7 @@ export default function Login({ isLoginModalOpen, handleLoginModalClose, handleJ
             handleLoginModalClose();
           })
           .catch((err) => {
-            alert(`로그인에 실패했습니다.\n아이디와 비밀번호를 확인해주세요.`);
+            alert(`로그인에 실패했습니다.`);
           });
       }
     },
