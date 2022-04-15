@@ -31,7 +31,7 @@ export default function Main() {
     } else if (userData) {
       setIsLoginModalOpen(false);
     }
-  }, [userData, error, isJoinModalOpen]);
+  }, [userData, error, isJoinModalOpen, isLoginModalOpen]);
 
   return (
     <>
