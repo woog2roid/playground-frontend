@@ -58,24 +58,20 @@ export default function UserMenuDrawer({ isOpen, closeDrawer, openDrawer }: prop
   };
 
   return (
-    <React.Fragment>
-      <Drawer anchor={'right'} open={isOpen} onClose={closeDrawer}>
-        <Box sx={{ width: '250px' }}>
-          <List></List>
-
-          <BottomListWrapper>
-            <Divider />
-            <List>
-              <ListItem button onClick={onClickLogout}>
-                로그아웃
-              </ListItem>
-              <ListItem button onClick={onClickQuit}>
-                회원탈퇴
-              </ListItem>
-            </List>
-          </BottomListWrapper>
-        </Box>
-      </Drawer>
-    </React.Fragment>
+    <Drawer anchor={'right'} open={isOpen} onClose={closeDrawer}>
+      <Box sx={{ width: '250px' }}>
+        <BottomListWrapper>
+          <Divider />
+          <List>
+            <ListItem button onClick={onClickLogout}>
+              로그아웃
+            </ListItem>
+            <ListItem button onClick={onClickQuit}>
+              회원탈퇴
+            </ListItem>
+          </List>
+        </BottomListWrapper>
+      </Box>
+    </Drawer>
   );
 }

@@ -4,7 +4,7 @@ export interface IUser {
   //createdAt, deletedAt, updatedAt은 무시.
 }
 
-interface friendRelation {
+export interface IUserRelation {
   follower: {
     id: string;
     nickname: string;
@@ -18,7 +18,7 @@ interface friendRelation {
 }
 
 export interface IFriends {
-  followings?: friendRelation[];
-  followers?: friendRelation[];
-  friends?: friendRelation[];
+  followings?: IUserRelation[];
+  followers?: IUserRelation[];
+  friends?: IUserRelation[];
 }
