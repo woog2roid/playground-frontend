@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
 import { IFriends, IUserRelation } from '@utils/dbTypes';
 
-import { Box, List, Drawer, Divider, ListItem } from '@mui/material';
+import { Box, List, Drawer, ListItem } from '@mui/material';
 import { RequestedFriendListItem, NotAcceptedFriendListItem, FriendListItem } from './ListItems';
 import { Summary, Details, BottomListWrapper } from './style';
 

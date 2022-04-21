@@ -12,7 +12,7 @@ import Footer from './GithubFooter';
 import { Wrapper, Div } from './style';
 
 export default function BottomNav() {
-  const { data: friendData, error, mutate } = useSWR<IFriends>(`/friend`, fetcher);
+  const { data: friendData } = useSWR<IFriends>(`/friend`, fetcher);
 
   const [isUserMenuDrawerOpen, setIsUserMenuDrawerOpen] = React.useState(false);
   const closeUserMenuDrawer = () => {

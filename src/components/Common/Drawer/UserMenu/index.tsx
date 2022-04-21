@@ -19,7 +19,6 @@ type propsType = {
 
 export default function UserMenuDrawer({ isOpen, closeDrawer, openDrawer }: propsType) {
   const navigate = useNavigate();
-  const { data, error, mutate } = useSWR<IUser>(`/user/me`, fetcher);
 
   const onClickLogout = async () => {
     closeDrawer();
