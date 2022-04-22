@@ -10,12 +10,12 @@ import { modalStyle, IsSatisfied } from './style';
 
 type propsType = {
   isJoinModalOpen: boolean;
-  handleJoinModalClose: () => void;
-  handleLoginModalOpen: () => void;
+  closeJoinModal: () => void;
+  openLoginModal: () => void;
 };
 
-export default function Join({ isJoinModalOpen, handleJoinModalClose, handleLoginModalOpen }: propsType) {
-  const { mutate } = useSWR<IUser>(`/user/me`, fetcher);
+export default function Join({ isJoinModalOpen, closeJoinModal, openLoginModal }: propsType) {
+  const { mutate: mutateUserData } = useSWR<IUser>(`/user/me`, fetcher);
 
   const [id, setId] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -54,7 +54,7 @@ export default function Join({ isJoinModalOpen, handleJoinModalClose, handleLogi
   }, [password]);
 
   //회원가입 요청
-  const onSubmit = React.useCallback(
+  const onSubmitJoinForm = React.useCallback(
     async (e) => {
       e.preventDefault();
       if (!isIdUnique) alert('아이디 중복을 확인해주십시오.');
@@ -69,9 +69,9 @@ export default function Join({ isJoinModalOpen, handleJoinModalClose, handleLogi
           })
           .then((res) => {
             console.log(res.data);
-            mutate();
-            handleJoinModalClose();
-            handleLoginModalOpen();
+            mutateUserData();
+            closeJoinModal();
+            openLoginModal();
           })
           .catch(() => {
             alert('회원가입에 실패했습니다.\n잠시 후에 다시 시도해주세요.');
@@ -83,7 +83,7 @@ export default function Join({ isJoinModalOpen, handleJoinModalClose, handleLogi
 
   return (
     <Modal open={isJoinModalOpen}>
-      <Box component="form" noValidate onSubmit={onSubmit} sx={modalStyle}>
+      <Box component="form" noValidate onSubmit={onSubmitJoinForm} sx={modalStyle}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField required fullWidth label="아이디를 입력하세요" onChange={onChangeId} />
@@ -110,8 +110,8 @@ export default function Join({ isJoinModalOpen, handleJoinModalClose, handleLogi
           <Grid item>
             <Link
               onClick={() => {
-                handleJoinModalClose();
-                handleLoginModalOpen();
+                closeJoinModal();
+                openLoginModal();
               }}
               variant="body2"
             >

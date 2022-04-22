@@ -5,7 +5,7 @@ import fetcher from '@utils/swrFetcehr';
 import { IFriends, IUserRelation } from '@utils/dbTypes';
 
 import { Box, List, Drawer, ListItem } from '@mui/material';
-import { RequestedFriendListItem, NotAcceptedFriendListItem, FriendListItem } from './ListItems';
+import { RequestedFriendListItem, NotAcceptedFriendListItem, FriendListItem } from './ListItemsByRelation';
 import { Summary, Details, BottomListWrapper } from './style';
 
 type propsType = {

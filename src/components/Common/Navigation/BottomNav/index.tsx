@@ -4,11 +4,12 @@ import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
 import { IFriends } from '@utils/dbTypes';
 
+import Footer from './GithubFooter';
 import UserMenuDrawer from '@components/Common/Drawer/UserMenu';
 import FriendDrawer from '@components/Common/Drawer/Friend';
+
 import { Badge } from '@mui/material';
 import { Home, People, Menu } from '@mui/icons-material';
-import Footer from './GithubFooter';
 import { Wrapper, Div } from './style';
 
 export default function BottomNav() {

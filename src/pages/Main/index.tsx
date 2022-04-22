@@ -15,14 +15,14 @@ import Wrapper from '@styles/layouts/MainLayout';
 
 export default function Main() {
   const navigate = useNavigate();
-  const { data: userData, error } = useSWR<IUser>(`/user/me`, fetcher);
+  const { data: userData, error: userDataError } = useSWR<IUser>(`/user/me`, fetcher);
 
   const [isLoginModalOpen, setIsLoginModalOpen] = React.useState(true);
   const [isJoinModalOpen, setIsJoinModalOpen] = React.useState(false);
 
   React.useEffect(() => {
-    if ((!userData?.id || error) && !isJoinModalOpen && !isLoginModalOpen) {
-      if (error?.status === 404) {
+    if ((!userData?.id || userDataError) && !isJoinModalOpen && !isLoginModalOpen) {
+      if (userDataError?.status === 404) {
         setIsLoginModalOpen(true);
       } else {
         alert('서버와의 연결이 끊어졌어요.');
@@ -31,7 +31,7 @@ export default function Main() {
     } else if (userData) {
       setIsLoginModalOpen(false);
     }
-  }, [userData, error, isJoinModalOpen, isLoginModalOpen]);
+  }, [userData, userDataError, isJoinModalOpen, isLoginModalOpen]);
 
   return (
     <>
@@ -48,13 +48,13 @@ export default function Main() {
       {/*모달은 아랫 부분에 위치하도록*/}
       <LoginModal
         isLoginModalOpen={isLoginModalOpen}
-        handleLoginModalClose={() => setIsLoginModalOpen(false)}
-        handleJoinModalOpen={() => setIsJoinModalOpen(true)}
+        closeLoginModal={() => setIsLoginModalOpen(false)}
+        openJoinModal={() => setIsJoinModalOpen(true)}
       />
       <JoinModal
         isJoinModalOpen={isJoinModalOpen}
-        handleJoinModalClose={() => setIsJoinModalOpen(false)}
-        handleLoginModalOpen={() => setIsLoginModalOpen(true)}
+        closeJoinModal={() => setIsJoinModalOpen(false)}
+        openLoginModal={() => setIsLoginModalOpen(true)}
       />
     </>
   );

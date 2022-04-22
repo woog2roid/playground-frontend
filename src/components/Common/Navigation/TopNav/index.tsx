@@ -13,18 +13,18 @@ import FriendPopover from './FriendPopover';
 export default function TopNav() {
   const { data: userData, error } = useSWR<IUser>(`/user/me`, fetcher);
 
+  const [userDataForFriendPopover, setUserDataForFriendPopover] = React.useState<IUser | null>(null);
+  const [errorDataForFriendPopover, setErrorDataForFriendPopover] = React.useState<String | null>(null);
+
   const [anchorElForFriendPopover, setAnchorElForFriendPopover] = React.useState<HTMLElement | null>(null);
   const [isFriendPopoverOpen, setIsFriendPopoverOpen] = React.useState<boolean>(false);
   const closeFriendPopover = () => {
     setIsFriendPopoverOpen(false);
   };
 
-  const [userDataForFriendPopover, setUserDataForFriendPopover] = React.useState<IUser | null>(null);
-  const [errorDataForFriendPopover, setErrorDataForFriendPopover] = React.useState<String | null>(null);
-
   const onSubmitFindById = React.useCallback((e) => {
     e.preventDefault();
-    setAnchorElForFriendPopover(e.currentTarget); //openPopover
+    setAnchorElForFriendPopover(e.currentTarget);
     axios
       .get(`/user?id=${e.target.input.value}`)
       .then((res) => {
@@ -39,10 +39,13 @@ export default function TopNav() {
       });
   }, []);
 
-  //팝오버가 꺼진 후에는, null로 초기화
+  /*
+    팝오버가 꺼진 후에는, null로 초기화
+    popover가 꺼지는 것에 시간이 걸려서
+    UX를 위해 setTimeout 이용하여서
+    초기화가 진행되지 않은 상태를 보지 않도록
+  */
   React.useEffect(() => {
-    //popover가 꺼지는 것에 시간이 걸려서...
-    //어쩔 수 없이 UX를 위해 setTimeout 이용...
     setTimeout(() => {
       if (!isFriendPopoverOpen) {
         setErrorDataForFriendPopover(null);

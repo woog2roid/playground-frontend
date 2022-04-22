@@ -1,9 +1,6 @@
 import * as React from 'react';
 
-import useSWR from 'swr';
 import axios from '@utils/axios';
-import fetcher from '@utils/swrFetcehr';
-import { IUser } from '@utils/dbTypes';
 
 import { useNavigate } from 'react-router-dom';
 

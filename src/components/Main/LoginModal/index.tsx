@@ -10,13 +10,13 @@ import { modalStyle } from './style';
 
 type propsType = {
   isLoginModalOpen: boolean;
-  handleLoginModalClose: () => void;
-  handleJoinModalOpen: () => void;
+  closeLoginModal: () => void;
+  openJoinModal: () => void;
 };
 
-export default function Login({ isLoginModalOpen, handleLoginModalClose, handleJoinModalOpen }: propsType) {
-  const { mutate: userDataMutate } = useSWR<IUser>(`/user/me`, fetcher);
-  const { mutate: friendDataMutate } = useSWR<IFriends>(`/friend`, fetcher);
+export default function Login({ isLoginModalOpen, closeLoginModal, openJoinModal }: propsType) {
+  const { mutate: mutateUserData } = useSWR<IUser>(`/user/me`, fetcher);
+  const { mutate: mutateFriendData } = useSWR<IFriends>(`/friend`, fetcher);
 
   const [id, setId] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -27,7 +27,7 @@ export default function Login({ isLoginModalOpen, handleLoginModalClose, handleJ
     setPassword(e.target.value);
   }, []);
 
-  const onSubmit = React.useCallback(
+  const onSubmitLoginForm = React.useCallback(
     async (e) => {
       e.preventDefault();
       if (id === '' || password === '') {
@@ -40,9 +40,9 @@ export default function Login({ isLoginModalOpen, handleLoginModalClose, handleJ
           })
           .then((res) => {
             console.log(res.data);
-            userDataMutate();
-            friendDataMutate();
-            handleLoginModalClose();
+            mutateUserData();
+            mutateFriendData();
+            closeLoginModal();
           })
           .catch((err) => {
             alert(`로그인에 실패했습니다.`);
@@ -54,7 +54,7 @@ export default function Login({ isLoginModalOpen, handleLoginModalClose, handleJ
 
   return (
     <Modal open={isLoginModalOpen}>
-      <Box component="form" noValidate onSubmit={onSubmit} sx={modalStyle}>
+      <Box component="form" noValidate onSubmit={onSubmitLoginForm} sx={modalStyle}>
         <TextField margin="normal" required fullWidth label="아이디를 입력하세요" autoFocus onChange={onChangeId} />
         <TextField
           margin="normal"
@@ -72,8 +72,8 @@ export default function Login({ isLoginModalOpen, handleLoginModalClose, handleJ
           <Grid item>
             <Link
               onClick={() => {
-                handleLoginModalClose();
-                handleJoinModalOpen();
+                closeLoginModal();
+                openJoinModal();
               }}
               variant="body2"
             >

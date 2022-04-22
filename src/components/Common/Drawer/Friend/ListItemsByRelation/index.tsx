@@ -5,9 +5,9 @@ import { IFriends } from '@utils/dbTypes';
 import fetcher from '@utils/swrFetcehr';
 import axios from '@utils/axios';
 
-import { List, ListItem, Popover } from '@mui/material';
-import { Check, ClearOutlined, ChatBubble, PersonRemove } from '@mui/icons-material';
-import { ListItemWrapper, PopoverListItem } from './style';
+import { List, Popover } from '@mui/material';
+import { Check, ClearOutlined } from '@mui/icons-material';
+import { ListItemWrapper, PopoverItem } from './style';
 
 type PropsType = {
   id: string;
@@ -17,7 +17,7 @@ type PropsType = {
 export const RequestedFriendListItem = ({ id: followerId, nickname: followerNickname }: PropsType) => {
   const { mutate } = useSWR<IFriends>(`/friend`, fetcher);
 
-  const acceptFriendRequest = () => {
+  const onClickAcceptRequest = () => {
     axios
       .post('/friend/accept', {
         id: followerId,
@@ -27,7 +27,7 @@ export const RequestedFriendListItem = ({ id: followerId, nickname: followerNick
       });
   };
 
-  const rejectFriendRequest = () => {
+  const onClickRejectRequest = () => {
     axios.delete(`/friend/request?relation=follower&id=${followerId}`).then(() => {
       mutate();
     });
@@ -39,8 +39,8 @@ export const RequestedFriendListItem = ({ id: followerId, nickname: followerNick
         {followerNickname}({followerId})님
       </span>
       <span>
-        <Check onClick={acceptFriendRequest} fontSize="small" />
-        <ClearOutlined onClick={rejectFriendRequest} fontSize="small" />
+        <Check onClick={onClickAcceptRequest} fontSize="small" />
+        <ClearOutlined onClick={onClickRejectRequest} fontSize="small" />
       </span>
     </ListItemWrapper>
   );
@@ -49,7 +49,7 @@ export const RequestedFriendListItem = ({ id: followerId, nickname: followerNick
 export const NotAcceptedFriendListItem = ({ id: followingId, nickname: followingNickname }: PropsType) => {
   const { mutate } = useSWR<IFriends>(`/friend`, fetcher);
 
-  const cancelFriendRequest = () => {
+  const onClickCancelRequest = () => {
     axios.delete(`/friend/request?relation=following&id=${followingId}`).then(() => {
       mutate();
     });
@@ -61,7 +61,7 @@ export const NotAcceptedFriendListItem = ({ id: followingId, nickname: following
         {followingNickname}({followingId})님
       </span>
       <span>
-        <ClearOutlined onClick={cancelFriendRequest} fontSize="small" />
+        <ClearOutlined onClick={onClickCancelRequest} fontSize="small" />
       </span>
     </ListItemWrapper>
   );
@@ -74,7 +74,7 @@ export const FriendListItem = ({ id: followingId, nickname: followingNickname }:
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const closeMenuPopover = () => {
     setAnchorEl(null);
   };
   const open = Boolean(anchorEl);
@@ -84,7 +84,7 @@ export const FriendListItem = ({ id: followingId, nickname: followingNickname }:
     handleClick(e);
   }, []);
 
-  const removeFriend = () => {
+  const onClickRemoveFriend = () => {
     axios.delete(`/friend?id=${followingId}`).then(() => {
       mutate();
     });
@@ -101,15 +101,15 @@ export const FriendListItem = ({ id: followingId, nickname: followingNickname }:
       <Popover
         open={open}
         anchorEl={anchorEl}
-        onClose={handleClose}
+        onClose={closeMenuPopover}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
         }}
       >
         <List>
-          <PopoverListItem>채팅하기</PopoverListItem>
-          <PopoverListItem onClick={removeFriend}>친구삭제</PopoverListItem>
+          <PopoverItem>채팅하기</PopoverItem>
+          <PopoverItem onClick={onClickRemoveFriend}>친구삭제</PopoverItem>
         </List>
       </Popover>
     </>
