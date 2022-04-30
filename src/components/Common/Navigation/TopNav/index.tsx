@@ -71,10 +71,10 @@ export default function TopNav() {
     <>
       <Wrapper>
         <Div>
-          <Link to="./game" className="nav-items hover">
+          <Link to="/game" className="nav-items hover">
             게임
           </Link>
-          <Link to="./chat" className="nav-items hover">
+          <Link to="/chat" className="nav-items hover">
             채팅
           </Link>
         </Div>

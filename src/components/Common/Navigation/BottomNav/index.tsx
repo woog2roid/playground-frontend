@@ -12,7 +12,11 @@ import { Badge } from '@mui/material';
 import { Home, People, Menu } from '@mui/icons-material';
 import { Wrapper, Div } from './style';
 
+import { useNavigate } from 'react-router-dom';
+
 export default function BottomNav() {
+  const navigate = useNavigate();
+
   const { data: friendData } = useSWR<IFriends>(`/friend`, fetcher);
 
   const [isUserMenuDrawerOpen, setIsUserMenuDrawerOpen] = React.useState(false);
@@ -35,7 +39,13 @@ export default function BottomNav() {
     <>
       <Wrapper>
         <Div>
-          <Home fontSize="large" className="nav-items hover" />
+          <Home
+            fontSize="large"
+            className="nav-items hover"
+            onClick={() => {
+              navigate('/');
+            }}
+          />
         </Div>
         <Div>
           <Footer />
