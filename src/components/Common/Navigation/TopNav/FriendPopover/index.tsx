@@ -27,9 +27,7 @@ export default function FriendPopover({ isOpen, anchorEl, onClose, userData, err
     (e) => {
       e.preventDefault();
       axios
-        .post('/friend/request', {
-          id: userData?.id,
-        })
+        .post(`/friend/request/${userData?.id}`)
         .then(() => {
           mutate();
           onClose();

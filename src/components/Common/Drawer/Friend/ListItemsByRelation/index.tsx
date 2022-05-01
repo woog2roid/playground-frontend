@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import useSWR from 'swr';
-import { IFriends } from '@utils/dbTypes';
+import { IFriends, IUser } from '@utils/dbTypes';
 import fetcher from '@utils/swrFetcehr';
 import axios from '@utils/axios';
 
@@ -16,15 +16,16 @@ type PropsType = {
 
 export const RequestedFriendListItem = ({ id: followerId, nickname: followerNickname }: PropsType) => {
   const { mutate } = useSWR<IFriends>(`/friend`, fetcher);
+  const { data: userData } = useSWR<IUser>('/user/me', fetcher);
 
   const onClickAcceptRequest = () => {
-    axios
-      .post('/friend/accept', {
-        id: followerId,
-      })
-      .then(() => {
-        mutate();
+    axios.post(`/friend/accept/${followerId}`).then(() => {
+      mutate();
+      axios.post(`/chat-room?dm=true`, {
+        members: [followerId, userData?.id],
+        title: '',
       });
+    });
   };
 
   const onClickRejectRequest = () => {
@@ -84,6 +85,8 @@ export const FriendListItem = ({ id: followingId, nickname: followingNickname }:
     handleClick(e);
   }, []);
 
+  const onClickChat = () => {};
+
   const onClickRemoveFriend = () => {
     axios.delete(`/friend?id=${followingId}`).then(() => {
       mutate();
@@ -108,7 +111,7 @@ export const FriendListItem = ({ id: followingId, nickname: followingNickname }:
         }}
       >
         <List>
-          <PopoverItem>채팅하기</PopoverItem>
+          <PopoverItem onClick={onClickChat}>채팅하기</PopoverItem>
           <PopoverItem onClick={onClickRemoveFriend}>친구삭제</PopoverItem>
         </List>
       </Popover>

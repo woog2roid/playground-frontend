@@ -28,12 +28,10 @@ export default function TopNav() {
     axios
       .get(`/user?id=${e.target.input.value}`)
       .then((res) => {
-        console.log(res.data);
         setUserDataForFriendPopover(res.data);
         setErrorDataForFriendPopover(null);
       })
       .catch((err) => {
-        console.log(err.response.data);
         setUserDataForFriendPopover(null);
         setErrorDataForFriendPopover(err.response.data.statusCode);
       });

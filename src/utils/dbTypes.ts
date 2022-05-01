@@ -23,3 +23,8 @@ export interface IFriends {
   followers?: IUserRelation[];
   friends?: IUserRelation[];
 }
+
+export interface IChatRoom {
+  title: string;
+  id: number;
+}
