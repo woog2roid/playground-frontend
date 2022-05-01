@@ -21,17 +21,10 @@ export default function Main() {
   const [isJoinModalOpen, setIsJoinModalOpen] = React.useState(false);
 
   React.useEffect(() => {
-    if ((!userData?.id || userDataError) && !isJoinModalOpen && !isLoginModalOpen) {
-      if (userDataError?.status === 404) {
-        setIsLoginModalOpen(true);
-      } else {
-        alert('서버와의 연결이 끊어졌어요.');
-        navigate(0);
-      }
-    } else if (userData) {
+    if (userData) {
       setIsLoginModalOpen(false);
     }
-  }, [userData, userDataError, isJoinModalOpen, isLoginModalOpen]);
+  }, [userData]);
 
   return (
     <>
