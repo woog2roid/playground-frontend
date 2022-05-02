@@ -5,8 +5,8 @@ import fetcher from '@utils/swrFetcehr';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Wrapper } from './style';
-import { Alert, Button } from '@mui/material';
+import { Wrapper } from '../style';
+import { Alert } from '@mui/material';
 
 export default function ServerError() {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Wrapper } from './style';
+import { Wrapper } from '../style';
 import { Alert, Button } from '@mui/material';
 
 export default function DeviceError() {
