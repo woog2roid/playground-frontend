@@ -23,13 +23,23 @@ const Wrapper = styled.div`
     width: inherit;
   }
 
-  & > .contents {
+  & > .content-wrapper {
     position: fixed;
     top: 10%;
-    height: 80%;
+    height: calc(80% - 60px);
     left: 8%;
-    width: 84%;
-    background-color: ${Color.TransparentBlue};
+    width: calc(84% - 60px);
+
+    border-radius: 5%;
+    padding: 30px;
+
+    background: ${Color.TransparentBlue};
+  }
+
+  .content-wrapper > .content {
+    background-color: ${Color.TransparentWhite};
+    width: 100%;
+    height: 100%;
   }
 `;
 

@@ -3,6 +3,8 @@ const Color = {
   White: 'rgba(255, 255, 255, 0.95)',
   Red: 'rgb(200, 0, 0)',
   TransparentBlue: 'rgba(200, 200, 230, 0.65)',
+  TransparentWhite: 'rgba(255, 255, 255, 0.4)',
+  TransparentBlack: 'rgba(100, 100, 100, 0.2)',
 };
 
 export default Color;

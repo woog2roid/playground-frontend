@@ -16,7 +16,9 @@ export default function MainLayout({ children }: propsType) {
         <div className="top-nav">
           <TopNav />
         </div>
-        <div className="contents">{children}</div>
+        <div className="content-wrapper">
+          <div className="content">{children}</div>
+        </div>
         <div className="bottom-nav">
           <BottomNav />
         </div>
