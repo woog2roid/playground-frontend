@@ -38,6 +38,7 @@ const Wrapper = styled.div`
 
   .content-wrapper > .content {
     background-color: ${Color.TransparentWhite};
+    outline: 1px solid ${Color.Gray};
     width: 100%;
     height: 100%;
   }
