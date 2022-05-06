@@ -72,7 +72,7 @@ export default function TopNav() {
           <Link to="/" className="nav-items hover" onClick={() => alert('아직 개발중인 기능입니다 :(')}>
             게임
           </Link>
-          <Link to="/chat" className="nav-items hover">
+          <Link to="/chat/inbox" className="nav-items hover">
             채팅
           </Link>
         </Div>

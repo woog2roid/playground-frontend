@@ -7,7 +7,8 @@ import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
 
 const Main = loadable(() => import('@pages/Main'));
-const Chat = loadable(() => import('@pages/Chat'));
+const ChatInbox = loadable(() => import('@pages/Chat/Inbox'));
+const ChatRoom = loadable(() => import('@pages/Chat/Room'));
 const DeviceError = loadable(() => import('@pages/Error/Device'));
 const ServerError = loadable(() => import('@pages/Error/Server'));
 const NotFound = loadable(() => import('@pages/Error/NotFound'));
@@ -32,7 +33,8 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Main />} />
-      <Route path="/chat" element={<Chat />} />
+      <Route path="/chat/inbox" element={<ChatInbox />} />
+      <Route path="/chat/room/:id" element={<ChatRoom />} />
       <Route path="/error/device" element={<DeviceError />} />
       <Route path="/error/server" element={<ServerError />} />
       <Route path="/*" element={<NotFound />} />
