@@ -7,13 +7,13 @@ const Wrapper = styled.div`
 
   & > .chat-room-list {
     width: 25%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
   }
 
   & > .chat-box {
     width: 75%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
   }
 `;
