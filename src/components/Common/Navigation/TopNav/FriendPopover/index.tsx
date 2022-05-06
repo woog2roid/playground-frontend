@@ -18,7 +18,7 @@ type propsType = {
 export default function FriendPopover({ isOpen, anchorEl, onClose, userData, errorCode }: propsType) {
   const { mutate } = useSWR<IFriends>(`/friend`, fetcher);
 
-  const errorMessage = errorCode == '404' ? '아이디를 확인해주세요 :(' : '서버와의 통신이 원활하지 않네요 :(';
+  const errorMessage = errorCode == '404' ? '아이디를 확인해주세요 :(' : '서버와의 통신이 원활하지 않습니다.';
   const ErrorMessage = () => {
     return <Box sx={{ padding: 1 }}>{errorMessage}</Box>;
   };
@@ -34,7 +34,7 @@ export default function FriendPopover({ isOpen, anchorEl, onClose, userData, err
         })
         .catch((error) => {
           onClose();
-          alert(`${error.response.data.message} :(`);
+          alert(`${error.response.data.message}`);
         });
     },
     [userData],
