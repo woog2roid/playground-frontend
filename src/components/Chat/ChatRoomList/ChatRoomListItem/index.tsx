@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
-import { IChatRoom } from '@utils/dbTypes';
+import { IChatRoom } from '@typings/dbTypes';
 import axios from '@utils/axios';
 
 import { useNavigate } from 'react-router-dom';

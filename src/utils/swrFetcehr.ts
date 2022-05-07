@@ -1,5 +1,5 @@
 import axios from '@utils/axios';
-import Error from './errorTypes';
+import Error from '@typings/errorTypes';
 
 const fetcher = (url: string) =>
   axios

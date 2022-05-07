@@ -3,7 +3,7 @@ import * as React from 'react';
 import useSWR from 'swr';
 import axios from '@utils/axios';
 import fetcher from '@utils/swrFetcehr';
-import { IUser, IFriends } from '@utils/dbTypes';
+import { IUser, IFriends } from '@typings/dbTypes';
 
 import { Box, Button, Popover } from '@mui/material';
 

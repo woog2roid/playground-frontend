@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
-import { IUser } from '@utils/dbTypes';
+import { IUser } from '@typings/dbTypes';
 
 import LoginModal from '@components/Main/LoginModal';
 import JoinModal from '@components/Main/JoinModal';

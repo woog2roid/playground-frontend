@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import useSWR from 'swr';
-import { IFriends, IUser } from '@utils/dbTypes';
+import { IFriends, IUser } from '@typings/dbTypes';
 import fetcher from '@utils/swrFetcehr';
 import axios from '@utils/axios';
 

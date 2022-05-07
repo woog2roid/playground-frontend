@@ -3,11 +3,11 @@ import * as React from 'react';
 import useSWR from 'swr';
 import axios from '@utils/axios';
 import fetcher from '@utils/swrFetcehr';
-import { IUser } from '@utils/dbTypes';
+import { IUser } from '@typings/dbTypes';
 
 import { Wrapper, Div, SearchWrapper, SearchIconWrapper, StyledInputBase as InputBase } from './style';
 import { Search as SearchIcon } from '@mui/icons-material';
-import Link from '@utils/NoneDecorationLink';
+import Link from '@styles/StyledComponents/NoneDecorationLink';
 import FriendPopover from './FriendPopover';
 
 export default function TopNav() {

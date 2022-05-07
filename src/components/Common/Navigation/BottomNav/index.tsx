@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
-import { IFriends } from '@utils/dbTypes';
+import { IFriends } from '@typings/dbTypes';
 
 import Footer from './GithubFooter';
 import UserMenuDrawer from '@components/Common/Drawer/UserMenu';

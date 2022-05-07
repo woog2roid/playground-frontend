@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
-import { IFriends, IUserRelation } from '@utils/dbTypes';
+import { IFriends, IUserRelation } from '@typings/dbTypes';
 
 import { Box, List, Drawer, ListItem } from '@mui/material';
 import { RequestedFriendListItem, NotAcceptedFriendListItem, FriendListItem } from './ListItemsByRelation';

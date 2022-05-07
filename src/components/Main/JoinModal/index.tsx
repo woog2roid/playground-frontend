@@ -3,7 +3,7 @@ import * as React from 'react';
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
 import axios from '@utils/axios';
-import { IUser } from '@utils/dbTypes';
+import { IUser } from '@typings/dbTypes';
 
 import { Box, TextField, Button, Modal, Grid, Link } from '@mui/material';
 import { modalStyle, IsSatisfied } from './style';
