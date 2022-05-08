@@ -6,7 +6,7 @@ import BottomNav from '@components/Common/Navigation/BottomNav';
 import Wrapper from './style';
 
 type propsType = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export default function MainLayout({ children }: propsType) {

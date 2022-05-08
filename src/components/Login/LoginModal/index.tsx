@@ -5,16 +5,14 @@ import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
 import { IUser, IFriends } from '@typings/dbTypes';
 
+import { useNavigate } from 'react-router-dom';
+
 import { Box, TextField, Button, Modal, Grid, Link } from '@mui/material';
 import { modalStyle } from './style';
 
-type propsType = {
-  isLoginModalOpen: boolean;
-  closeLoginModal: () => void;
-  openJoinModal: () => void;
-};
+export default function Login() {
+  const navigate = useNavigate();
 
-export default function Login({ isLoginModalOpen, closeLoginModal, openJoinModal }: propsType) {
   const { mutate: mutateUserData } = useSWR<IUser>(`/user/me`, fetcher);
   const { mutate: mutateFriendData } = useSWR<IFriends>(`/friend`, fetcher);
 
@@ -42,7 +40,7 @@ export default function Login({ isLoginModalOpen, closeLoginModal, openJoinModal
             console.log(res.data);
             mutateUserData();
             mutateFriendData();
-            closeLoginModal();
+            navigate('/notice');
           })
           .catch((err) => {
             alert(`로그인에 실패했습니다.`);
@@ -53,7 +51,7 @@ export default function Login({ isLoginModalOpen, closeLoginModal, openJoinModal
   );
 
   return (
-    <Modal open={isLoginModalOpen}>
+    <Modal open={true}>
       <Box component="form" noValidate onSubmit={onSubmitLoginForm} sx={modalStyle}>
         <TextField margin="normal" required fullWidth label="아이디를 입력하세요" autoFocus onChange={onChangeId} />
         <TextField
@@ -72,8 +70,7 @@ export default function Login({ isLoginModalOpen, closeLoginModal, openJoinModal
           <Grid item>
             <Link
               onClick={() => {
-                closeLoginModal();
-                openJoinModal();
+                navigate('/join');
               }}
               variant="body2"
             >

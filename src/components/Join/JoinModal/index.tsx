@@ -1,21 +1,14 @@
 import * as React from 'react';
 
-import useSWR from 'swr';
-import fetcher from '@utils/swrFetcehr';
 import axios from '@utils/axios';
-import { IUser } from '@typings/dbTypes';
+
+import { useNavigate } from 'react-router-dom';
 
 import { Box, TextField, Button, Modal, Grid, Link } from '@mui/material';
 import { modalStyle, IsSatisfied } from './style';
 
-type propsType = {
-  isJoinModalOpen: boolean;
-  closeJoinModal: () => void;
-  openLoginModal: () => void;
-};
-
-export default function Join({ isJoinModalOpen, closeJoinModal, openLoginModal }: propsType) {
-  const { mutate: mutateUserData } = useSWR<IUser>(`/user/me`, fetcher);
+export default function Join() {
+  const navigate = useNavigate();
 
   const [id, setId] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -68,10 +61,7 @@ export default function Join({ isJoinModalOpen, closeJoinModal, openLoginModal }
             nickname: nickname,
           })
           .then((res) => {
-            console.log(res.data);
-            mutateUserData();
-            closeJoinModal();
-            openLoginModal();
+            navigate('/login');
           })
           .catch(() => {
             alert('회원가입에 실패했습니다.\n잠시 후에 다시 시도해주세요.');
@@ -82,7 +72,7 @@ export default function Join({ isJoinModalOpen, closeJoinModal, openLoginModal }
   );
 
   return (
-    <Modal open={isJoinModalOpen}>
+    <Modal open={true}>
       <Box component="form" noValidate onSubmit={onSubmitJoinForm} sx={modalStyle}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -110,8 +100,7 @@ export default function Join({ isJoinModalOpen, closeJoinModal, openLoginModal }
           <Grid item>
             <Link
               onClick={() => {
-                closeJoinModal();
-                openLoginModal();
+                navigate('/login');
               }}
               variant="body2"
             >

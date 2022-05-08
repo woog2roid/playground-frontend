@@ -43,7 +43,7 @@ export default function BottomNav() {
             fontSize="large"
             className="nav-items hover"
             onClick={() => {
-              navigate('/');
+              navigate('/notice');
             }}
           />
         </Div>
