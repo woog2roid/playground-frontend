@@ -1,10 +1,11 @@
 import * as React from 'react';
 import loadable from '@loadable/component';
 
-import { useNavigate, useLocation, Route, Routes, Navigate } from 'react-router-dom';
+import { useNavigate, Route, Routes } from 'react-router-dom';
 
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
+import { IUser } from '@typings/dbTypes';
 
 const Init = loadable(() => import('@pages/Init'));
 const Login = loadable(() => import('@pages/Login'));
@@ -17,6 +18,7 @@ const NotFound = loadable(() => import('@pages/Error/NotFound'));
 
 export default function App() {
   const navigate = useNavigate();
+  const { data: userData } = useSWR<IUser>(`/user/me`, fetcher);
   const { error: serverError } = useSWR(`/`, fetcher, {
     refreshInterval: 5000,
   });

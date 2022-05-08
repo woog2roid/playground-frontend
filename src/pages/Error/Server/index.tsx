@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
+import { IUser } from '@typings/dbTypes';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -14,6 +15,7 @@ export default function ServerError() {
   const { error: serverError } = useSWR(`/`, fetcher, {
     refreshInterval: 5000,
   });
+  const { data: userData } = useSWR<IUser>(`/user/me`, fetcher);
 
   React.useEffect(() => {
     if (!serverError) {
