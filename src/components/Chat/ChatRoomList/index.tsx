@@ -11,14 +11,14 @@ import ChatRoomController from './ChatRoomController';
 import { Divider, List, ListItem } from '@mui/material';
 
 export default function Chat() {
-  const { data: chatRoomData, mutate: mutateChatRoomData } = useSWR<IChatRoom[]>(`/chat-room`, fetcher);
+  const { data: chatRoomsData, mutate: mutateChatRoomData } = useSWR<IChatRoom[]>(`/chat-room`, fetcher);
 
   return (
     <>
       <ChatRoomController />
       <Divider />
       <List sx={{ padding: 0, margin: 0 }}>
-        {chatRoomData?.map((data: IChatRoom) => {
+        {chatRoomsData?.map((data: IChatRoom) => {
           return (
             <ListItem key={+data.id} button>
               <ChatRoomList data={data} />
