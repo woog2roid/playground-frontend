@@ -26,7 +26,7 @@ export default function MessageInputBox() {
   return (
     <MessageInputBoxWrapper onSubmit={onSubmitSendMessage}>
       <input name="input" placeholder="메세지 입력..." />
-      <Button variant="text" type="submit">
+      <Button variant="text" type="submit" sx={{ ml: '5px' }}>
         보내기
       </Button>
     </MessageInputBoxWrapper>

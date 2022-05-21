@@ -13,8 +13,6 @@ const Wrapper = styled.div`
 
   & > .chat-box {
     width: 75%;
-    overflow-y: auto;
-    overflow-x: hidden;
   }
 `;
 

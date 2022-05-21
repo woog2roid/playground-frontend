@@ -11,7 +11,9 @@ export const MessageInputBoxWrapper = styled.form`
   border-radius: 20px;
 
   & > input {
-    width: calc(90% - 80px);
+    background-color: transparent;
+
+    width: calc(90% - 30px);
     height: 40px;
 
     font-family: MinSans;

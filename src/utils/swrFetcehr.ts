@@ -5,7 +5,7 @@ const fetcher = (url: string) =>
   axios
     .get(url)
     .then((response) => {
-      console.log(response.data);
+      console.log('swr fetcher', url, response.data);
       return response.data;
     })
     .catch((err) => {

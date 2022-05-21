@@ -28,3 +28,14 @@ export interface IChatRoom {
   title: string;
   id: number;
 }
+
+export interface IChat {
+  id: number;
+  roomId: number;
+  message: string;
+  createdAt: Date;
+  sender: {
+    id: string;
+    nickname: string;
+  };
+}
