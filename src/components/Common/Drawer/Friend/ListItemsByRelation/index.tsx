@@ -6,7 +6,7 @@ import fetcher from '@utils/swrFetcehr';
 import axios from '@utils/axios';
 
 import { List, Popover } from '@mui/material';
-import { Check, ClearOutlined } from '@mui/icons-material';
+import { Check, ClearOutlined, PersonRemove } from '@mui/icons-material';
 import { ListItemWrapper, PopoverItem } from './style';
 
 type PropsType = {
@@ -71,22 +71,6 @@ export const NotAcceptedFriendListItem = ({ id: followingId, nickname: following
 export const FriendListItem = ({ id: followingId, nickname: followingNickname }: PropsType) => {
   const { mutate } = useSWR<IFriends>(`/friend`, fetcher);
 
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const closeMenuPopover = () => {
-    setAnchorEl(null);
-  };
-  const open = Boolean(anchorEl);
-
-  const onContextMenu = React.useCallback((e) => {
-    e.preventDefault();
-    handleClick(e);
-  }, []);
-
-  const onClickChat = () => {};
-
   const onClickRemoveFriend = () => {
     axios.delete(`/friend?id=${followingId}`).then(() => {
       mutate();
@@ -95,26 +79,14 @@ export const FriendListItem = ({ id: followingId, nickname: followingNickname }:
 
   return (
     <>
-      <ListItemWrapper onContextMenu={onContextMenu}>
+      <ListItemWrapper>
         <span>
           {followingNickname}({followingId})님
         </span>
+        <span>
+          <PersonRemove onClick={onClickRemoveFriend} fontSize="small" />
+        </span>
       </ListItemWrapper>
-
-      <Popover
-        open={open}
-        anchorEl={anchorEl}
-        onClose={closeMenuPopover}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <List>
-          <PopoverItem onClick={onClickChat}>채팅하기</PopoverItem>
-          <PopoverItem onClick={onClickRemoveFriend}>친구삭제</PopoverItem>
-        </List>
-      </Popover>
     </>
   );
 };
