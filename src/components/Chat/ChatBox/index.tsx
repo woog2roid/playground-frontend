@@ -7,7 +7,9 @@ import axios from '@utils/axios';
 
 import { useParams } from 'react-router-dom';
 
-import Message from './Message';
+import dayjs from 'dayjs';
+
+import ChatList from './ChatList';
 import ChatRoomInfo from './ChatRoomInfo';
 import MessageInputBox from './MessageInputBox';
 
@@ -21,28 +23,33 @@ export default function ChatBox() {
     fetcher,
   );
 
+  const chatsByDate = chatData !== undefined ? sortChatDataByDate(([] as IChat[]).concat(...chatData)) : undefined;
+
   return (
     <ChatBoxLayout>
       <div className="chat-room-info">
         <ChatRoomInfo />
       </div>
       <Divider />
-      <div className="chat-room">
-        {chatData !== undefined ? (
-          ([] as IChat[])
-            .concat(...chatData)
-            .reverse()
-            .map((data) => {
-              console.log('테스트', data);
-              return <Message key={data.id} data={data} />;
-            })
-        ) : (
-          <></>
-        )}
-      </div>
+      <div className="chat-room">{chatsByDate !== undefined ? <ChatList chatsByDate={chatsByDate} /> : <></>}</div>
       <div className="message-input">
         <MessageInputBox />
       </div>
     </ChatBoxLayout>
   );
+}
+
+function sortChatDataByDate(chats: IChat[]) {
+  const chatsByDate: { [key: string]: IChat[] } = {};
+
+  chats.forEach((chat) => {
+    const date = dayjs(chat.createdAt).format('YYYY-MM-DD');
+    if (chatsByDate[date] === undefined) {
+      chatsByDate[date] = [chat];
+    } else {
+      chatsByDate[date].push(chat);
+    }
+  });
+
+  return chatsByDate;
 }
