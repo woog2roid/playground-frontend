@@ -10,18 +10,21 @@ import { Button } from '@mui/material';
 export default function MessageInputBox() {
   const { id: chatRoomId } = useParams();
 
-  const onSubmitSendMessage = React.useCallback(async (e) => {
-    e.preventDefault();
-    console.log(e.target.input.value);
-    await axios
-      .post(`/chat-room/${chatRoomId}/chat`, {
-        message: e.target.input.value,
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    e.target.input.value = '';
-  }, []);
+  const onSubmitSendMessage = React.useCallback(
+    async (e) => {
+      e.preventDefault();
+      console.log(e.target.input.value);
+      await axios
+        .post(`/chat-room/${chatRoomId}/chat`, {
+          message: e.target.input.value,
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      e.target.input.value = '';
+    },
+    [chatRoomId],
+  );
 
   return (
     <MessageInputBoxWrapper onSubmit={onSubmitSendMessage}>
