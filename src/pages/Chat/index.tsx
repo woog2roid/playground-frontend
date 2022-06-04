@@ -10,7 +10,7 @@ import ChatBox from '@components/Chat/ChatBox';
 import { useParams } from 'react-router-dom';
 
 export default function ChatInbox() {
-  const params = useParams();
+  const { id: chatRoomId } = useParams();
 
   return (
     <>
@@ -20,7 +20,7 @@ export default function ChatInbox() {
             <ChatRoomList />
           </div>
           <Divider orientation="vertical" />
-          <div className="chat-box">{params.id === undefined ? <></> : <ChatBox />}</div>
+          <div className="chat-box">{chatRoomId === undefined ? <></> : <ChatBox />}</div>
         </ChatComponenetWrapper>
       </MainLayout>
     </>
