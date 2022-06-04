@@ -22,9 +22,6 @@ export default function DeviceError() {
     <>
       <Wrapper>
         <Alert severity="error">놀이터 서비스는 서비스 특성상 데스크탑 환경만을 지원해요:(</Alert>
-        <Button onClick={() => navigate(-1)} fullWidth variant="contained" color="error">
-          이전 페이지로 가기
-        </Button>
       </Wrapper>
     </>
   );

@@ -9,9 +9,6 @@ export default function NotFound() {
   return (
     <Wrapper>
       <Alert severity="error">404에러! URL을 확인해주세요 :(</Alert>
-      <Button onClick={() => navigate(-1)} fullWidth variant="contained" color="error">
-        이전 페이지로 가기
-      </Button>
     </Wrapper>
   );
 }
