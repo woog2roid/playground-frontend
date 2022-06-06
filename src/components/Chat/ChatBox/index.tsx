@@ -36,9 +36,7 @@ export default function ChatBox() {
           chatData?.[0].push(chat);
         });
         return updatedChatData;
-      }, false).then(() => {
-        //console.log(data);
-      });
+      }, false).then(() => {});
     },
     [mutateChatData],
   );
@@ -48,9 +46,9 @@ export default function ChatBox() {
     socket?.on('message', onMessage);
 
     return () => {
-      disconnectSocket();
+      socket?.off('message');
     };
-  }, [socket, disconnectSocket, mutateChatData]);
+  }, [socket, mutateChatData]);
 
   const chatsByDate = chatData !== undefined ? sortChatDataByDate(([] as IChat[]).concat(...chatData)) : undefined;
 

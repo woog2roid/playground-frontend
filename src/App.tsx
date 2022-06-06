@@ -43,6 +43,7 @@ export default function App() {
     로그인이 되어있는 페이지 중에서는 /notice가 메인페이지의 역할을 수행한다.
     (notice에서는 공지사항, 사용법 등이 게시판 형태로 업데이트 됨.)
   */
+
   return (
     <Routes>
       <Route path="/" element={<Init />} />
