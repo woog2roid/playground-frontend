@@ -32,6 +32,7 @@ export interface IChatRoom {
 export interface IChat {
   id: number;
   roomId: number;
+  system: boolean;
   message: string;
   createdAt: Date;
   sender: {

@@ -7,7 +7,8 @@ import { IUser, IChat } from '@typings/dbTypes';
 import dayjs from 'dayjs';
 
 import { Divider, Chip } from '@mui/material';
-import Chat from './Chat';
+import UserChat from './UserChat';
+import SystemChat from './SystemChat';
 
 type propsType = {
   chatsByDate: { [key: string]: IChat[] };
@@ -29,20 +30,38 @@ export default function ChatList({ chatsByDate }: propsType) {
               <Chip label={date} />
             </Divider>
             {chats.map((chat, index) => {
+              if (chat.system) {
+                return <SystemChat data={chat} />;
+              }
               if (chat.sender.id === userData?.id) {
-                return <Chat key={chat.id} data={chat} showsSender={false} isMyMessage={true} />;
+                return (
+                  <UserChat
+                    key={chat.id}
+                    data={chat}
+                    showsSender={false}
+                    isMyMessage={true}
+                  />
+                );
               }
               if (index === 0) {
-                return <Chat key={chat.id} data={chat} showsSender={true} isMyMessage={false} />;
+                return (
+                  <UserChat
+                    key={chat.id}
+                    data={chat}
+                    showsSender={true}
+                    isMyMessage={false}
+                  />
+                );
               } else {
                 return (
-                  <Chat
+                  <UserChat
                     key={chat.id}
                     data={chat}
                     showsSender={
                       chats[index - 1].sender.id !== chat.sender.id ||
-                      dayjs(chats[index - 1].createdAt).format('YYYY-MM-DD HH:mm') !==
-                        dayjs(chat.createdAt).format('YYYY-MM-DD HH:mm')
+                      dayjs(chats[index - 1].createdAt).format(
+                        'YYYY-MM-DD HH:mm',
+                      ) !== dayjs(chat.createdAt).format('YYYY-MM-DD HH:mm')
                     }
                     isMyMessage={false}
                   />

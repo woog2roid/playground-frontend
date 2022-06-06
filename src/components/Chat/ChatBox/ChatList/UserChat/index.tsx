@@ -11,7 +11,7 @@ type propsType = {
   showsSender: boolean;
 };
 
-export default function Chat({ data, isMyMessage, showsSender }: propsType) {
+export default function UserChat({ data, isMyMessage, showsSender }: propsType) {
   const { message, createdAt } = data;
   const { id: senderId, nickname: senderNickname } = data.sender;
 
