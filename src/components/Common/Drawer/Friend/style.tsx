@@ -14,8 +14,4 @@ export const Summary = styled.summary`
   }
 `;
 
-export const BottomListWrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-`;
+export const BottomListWrapper = styled.div``;

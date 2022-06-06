@@ -5,7 +5,11 @@ import fetcher from '@utils/swrFetcehr';
 import { IFriends, IUserRelation } from '@typings/dbTypes';
 
 import { Box, List, Drawer, ListItem } from '@mui/material';
-import { RequestedFriendListItem, NotAcceptedFriendListItem, FriendListItem } from './ListItemsByRelation';
+import {
+  RequestedFriendListItem,
+  NotAcceptedFriendListItem,
+  FriendListItem,
+} from './ListItemsByRelation';
 import { Summary, Details, BottomListWrapper } from './style';
 
 type propsType = {
@@ -18,14 +22,26 @@ export default function FriendDrawer({ isOpen, closeDrawer }: propsType) {
 
   return (
     <Drawer anchor={'right'} open={isOpen} onClose={closeDrawer}>
-      <Box sx={{ width: '300px' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          width: '300px',
+          height: '100%',
+          overflow: 'auto',
+        }}
+      >
         <Details>
           <Summary>{`친구 목록  (${data?.friends?.length})`}</Summary>
           <List>
             {data?.friends?.map((data: IUserRelation) => {
               return (
                 <ListItem button key={+data.id}>
-                  <FriendListItem id={data.following.id} nickname={data.following.nickname} />
+                  <FriendListItem
+                    id={data.following.id}
+                    nickname={data.following.nickname}
+                  />
                 </ListItem>
               );
             })}
@@ -38,7 +54,10 @@ export default function FriendDrawer({ isOpen, closeDrawer }: propsType) {
               {data?.followers?.map((data: IUserRelation) => {
                 return (
                   <ListItem button key={+data.id}>
-                    <RequestedFriendListItem id={data.follower.id} nickname={data.follower.nickname} />
+                    <RequestedFriendListItem
+                      id={data.follower.id}
+                      nickname={data.follower.nickname}
+                    />
                   </ListItem>
                 );
               })}
@@ -50,7 +69,10 @@ export default function FriendDrawer({ isOpen, closeDrawer }: propsType) {
               {data?.followings?.map((data: IUserRelation) => {
                 return (
                   <ListItem button key={+data.id}>
-                    <NotAcceptedFriendListItem id={data.following.id} nickname={data.following.nickname} />
+                    <NotAcceptedFriendListItem
+                      id={data.following.id}
+                      nickname={data.following.nickname}
+                    />
                   </ListItem>
                 );
               })}
