@@ -1,9 +1,10 @@
 import * as React from 'react';
 import useSocket from '@hooks/useSocket';
 
+import useSWR from 'swr';
 import useSWRInfinite from 'swr/infinite';
 import fetcher from '@utils/swrFetcehr';
-import { IChat } from '@typings/dbTypes';
+import { IChat, IUser } from '@typings/dbTypes';
 import axios from '@utils/axios';
 
 import produce from 'immer';
@@ -22,35 +23,69 @@ import { ChatBoxLayout } from './style';
 export default function ChatBox() {
   //get Chat Data from server
   const { id: chatRoomId } = useParams();
+  const { data: userData } = useSWR<IUser>(`/user/me`, fetcher);
   const { data: chatData, mutate: mutateChatData } = useSWRInfinite<IChat[]>(
     (index) => `/chat-room/${chatRoomId}/chat/?page=${index + 1}`,
     fetcher,
+    {
+      onSuccess() {
+        setTimeout(() => {
+          //채팅 로딩...
+          scrollToBottom();
+        }, 100);
+      },
+    },
   );
 
+  //scroll
+  const chatBoxScroll = React.useRef<HTMLInputElement>(null);
+  const scrollToBottom = React.useCallback(() => {
+    if (chatBoxScroll && chatBoxScroll.current) {
+      chatBoxScroll.current.scrollTop = chatBoxScroll.current.scrollHeight;
+    }
+  }, []);
+
   //socket
+  const [socket, disconnectSocket] = useSocket('chat');
+
   const onMessage = React.useCallback(
     (chat: IChat) => {
       console.log('웹 소켓 메세지 도착', chat);
       mutateChatData((chatData) => {
+        //socket 데이터 바탕으로 local에서 직접 업데이트
         const updatedChatData = produce(chatData, (chatData) => {
           chatData?.[0].push(chat);
         });
         return updatedChatData;
-      }, false).then(() => {});
+      }, false).then(() => {
+        //그 후에 채팅창 UX 조절 (스크롤 or 토스트)
+        if (chatBoxScroll && chatBoxScroll.current) {
+          if (
+            //이미 충분히 밑이거나
+            chatBoxScroll.current.scrollTop >
+              chatBoxScroll.current.scrollHeight - 800 ||
+            //본인이 보낸 메세지이면
+            chat.sender.id === userData?.id
+          ) {
+            scrollToBottom();
+          }
+        }
+      });
     },
     [mutateChatData],
   );
 
-  const [socket, disconnectSocket] = useSocket('chat');
   React.useEffect(() => {
     socket?.on('message', onMessage);
-
     return () => {
       socket?.off('message');
     };
   }, [socket, mutateChatData]);
 
-  const chatsByDate = chatData !== undefined ? sortChatDataByDate(([] as IChat[]).concat(...chatData)) : undefined;
+  const chatsByDate =
+    chatData !== undefined
+      ? sortChatDataByDate(([] as IChat[]).concat(...chatData))
+      : undefined;
 
   return (
     <ChatBoxLayout>
@@ -58,7 +93,13 @@ export default function ChatBox() {
         <ChatRoomInfo />
       </div>
       <Divider />
-      <div className="chat-room">{chatsByDate !== undefined ? <ChatList chatsByDate={chatsByDate} /> : <></>}</div>
+      <div className="chat-room" ref={chatBoxScroll}>
+        {chatsByDate !== undefined ? (
+          <ChatList chatsByDate={chatsByDate} />
+        ) : (
+          <></>
+        )}
+      </div>
       <div className="message-input">
         <MessageInputBox />
       </div>
