@@ -33,12 +33,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "cname": "echo playground.woog2roid.dev > build\\CNAME",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
+    "cname": "echo playground.woog2roid.dev > build//CNAME",
     "predeploy": "npm run build && npm run cname",
-    "deploy": "gh-pages --add -d build"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

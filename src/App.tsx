@@ -17,6 +17,11 @@ const ServerError = loadable(() => import('@pages/Error/Server'));
 const NotFound = loadable(() => import('@pages/Error/NotFound'));
 
 export default function App() {
+  // 배포 환경에서 console.log 지우기
+  if (process.env.NODE_ENV === 'production') {
+    console.log = function no_console() {};
+  }
+
   const navigate = useNavigate();
   const { data: userData } = useSWR<IUser>(`/user/me`, fetcher);
   const { error: serverError } = useSWR(`/`, fetcher, {
