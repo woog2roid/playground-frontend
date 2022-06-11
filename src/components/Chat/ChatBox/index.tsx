@@ -25,15 +25,21 @@ export default function ChatBox() {
   //get Chat Data from server
   const { id: chatRoomId } = useParams();
   const { data: userData } = useSWR<IUser>(`/user/me`, fetcher);
-  const { data: chatData, mutate: mutateChatData } = useSWRInfinite<IChat[]>(
+  const {
+    data: chatData,
+    mutate: mutateChatData,
+    setSize: setSWRInfiniteSize,
+  } = useSWRInfinite<IChat[]>(
     (index) => `/chat-room/${chatRoomId}/chat/?page=${index + 1}`,
     fetcher,
     {
-      onSuccess() {
-        setTimeout(() => {
-          //채팅 로딩...
-          scrollToBottom();
-        }, 100);
+      onSuccess(data) {
+        if (data?.length === 1) {
+          setTimeout(() => {
+            //채팅 로딩 시간 기다림 + 최초 로딩시에만
+            scrollToBottom();
+          }, 100);
+        }
       },
     },
   );
@@ -45,6 +51,35 @@ export default function ChatBox() {
       chatBoxScroll.current.scrollTop = chatBoxScroll.current.scrollHeight;
     }
   }, [chatRoomId]);
+
+  const onChatBoxScroll = React.useCallback(
+    (e) => {
+      if (e.target.scrollTop === 0) {
+        //맨 위
+        if (
+          //더 이상 불러올 채팅이 없지 않다면
+          chatData &&
+          !(
+            chatData?.[0]?.length === 0 ||
+            chatData?.[chatData?.length - 1]?.length < 100
+          )
+        ) {
+          const scrollHeightBeforeFetch = e.target.scrollHeight;
+          setSWRInfiniteSize((size) => size + 1).then(() => {
+            if (chatBoxScroll && chatBoxScroll.current) {
+              e.target.scrollTop =
+                chatBoxScroll?.current?.scrollHeight - scrollHeightBeforeFetch;
+            }
+          });
+        }
+      }
+      if (e.target.scrollTop >= e.target.scrollHeight - 600) {
+        //맨 아래
+        setUncheckedChat(undefined);
+      }
+    },
+    [chatData],
+  );
 
   //new message float alert
   const [uncheckedChat, setUncheckedChat] = React.useState<IChat>();
@@ -71,7 +106,7 @@ export default function ChatBox() {
         const updatedChatData = produce(
           previousChatData,
           (previousChatData) => {
-            previousChatData?.[0].push(socketChat);
+            previousChatData?.[0].unshift(socketChat);
           },
         );
         return updatedChatData;
@@ -92,6 +127,7 @@ export default function ChatBox() {
             socketChat.sender.id === userData?.id
           ) {
             scrollToBottom();
+            setUncheckedChat(undefined);
           } else {
             setUncheckedChat(socketChat);
           }
@@ -128,7 +164,7 @@ export default function ChatBox() {
 
   const chatsByDate =
     chatData !== undefined
-      ? sortChatDataByDate(([] as IChat[]).concat(...chatData))
+      ? sortChatDataByDate(([] as IChat[]).concat(...chatData).reverse())
       : undefined;
 
   return (
@@ -137,7 +173,7 @@ export default function ChatBox() {
         <ChatRoomInfo />
       </div>
       <Divider />
-      <div className="chat-room" ref={chatBoxScroll}>
+      <div className="chat-room" ref={chatBoxScroll} onScroll={onChatBoxScroll}>
         {chatsByDate !== undefined ? (
           <ChatList chatsByDate={chatsByDate} />
         ) : (
