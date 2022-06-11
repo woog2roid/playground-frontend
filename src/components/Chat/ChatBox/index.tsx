@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 import ChatList from './ChatList';
 import ChatRoomInfo from './ChatRoomInfo';
 import MessageInputBox from './MessageInputBox';
+import NewChatAlert from './NewChatAlert';
 
 import { Divider } from '@mui/material';
 import { ChatBoxLayout } from './style';
@@ -43,31 +44,56 @@ export default function ChatBox() {
     if (chatBoxScroll && chatBoxScroll.current) {
       chatBoxScroll.current.scrollTop = chatBoxScroll.current.scrollHeight;
     }
-  }, []);
+  }, [chatRoomId]);
+
+  //new message float alert
+  const [uncheckedChat, setUncheckedChat] = React.useState<IChat>();
+  const handleNewChatAlertClick = () => {
+    handleNewChatAlertDelete();
+    scrollToBottom();
+  };
+  const handleNewChatAlertDelete = () => {
+    setUncheckedChat(undefined);
+  };
+
+  React.useEffect(() => {
+    setUncheckedChat(undefined);
+  }, [chatRoomId]);
 
   //socket
-  const [socket, disconnectSocket] = useSocket('chat');
+  const [socket] = useSocket('chat');
 
   const onMessage = React.useCallback(
-    (chat: IChat) => {
-      console.log('웹 소켓 메세지 도착', chat);
-      mutateChatData((chatData) => {
+    (socketChat: IChat) => {
+      console.log('웹 소켓 메세지 도착', socketChat);
+      mutateChatData((previousChatData) => {
         //socket 데이터 바탕으로 local에서 직접 업데이트
-        const updatedChatData = produce(chatData, (chatData) => {
-          chatData?.[0].push(chat);
-        });
+        const updatedChatData = produce(
+          previousChatData,
+          (previousChatData) => {
+            previousChatData?.[0].push(socketChat);
+          },
+        );
         return updatedChatData;
       }, false).then(() => {
         //그 후에 채팅창 UX 조절 (스크롤 or 토스트)
         if (chatBoxScroll && chatBoxScroll.current) {
+          console.log(
+            chatBoxScroll.current.scrollTop,
+            chatBoxScroll.current.scrollHeight,
+          );
           if (
+            //아직 채팅창이 한장을 안넘어가거나
+            chatBoxScroll.current.scrollHeight < 800 ||
             //이미 충분히 밑이거나
             chatBoxScroll.current.scrollTop >
               chatBoxScroll.current.scrollHeight - 800 ||
             //본인이 보낸 메세지이면
-            chat.sender.id === userData?.id
+            socketChat.sender.id === userData?.id
           ) {
             scrollToBottom();
+          } else {
+            setUncheckedChat(socketChat);
           }
         }
       });
@@ -81,6 +107,24 @@ export default function ChatBox() {
       socket?.off('message');
     };
   }, [socket, mutateChatData]);
+
+  //uswSWRInfinte 에서 온 data를 후가공함.
+  const sortChatDataByDate = (chats: IChat[]) => {
+    console.log('sortChatDataByDate 함수 실행');
+    //데이터에 날자를 기준으로
+    const chatsByDate: { [key: string]: IChat[] } = {};
+
+    chats.forEach((chat) => {
+      const date = dayjs(chat.createdAt).format('YYYY-MM-DD');
+      if (chatsByDate[date] === undefined) {
+        chatsByDate[date] = [chat];
+      } else {
+        chatsByDate[date].push(chat);
+      }
+    });
+
+    return chatsByDate;
+  };
 
   const chatsByDate =
     chatData !== undefined
@@ -99,26 +143,21 @@ export default function ChatBox() {
         ) : (
           <></>
         )}
+        {uncheckedChat !== undefined ? (
+          <div className="new-chat">
+            <NewChatAlert
+              data={uncheckedChat}
+              onClick={handleNewChatAlertClick}
+              onDelete={handleNewChatAlertDelete}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
       <div className="message-input">
         <MessageInputBox />
       </div>
     </ChatBoxLayout>
   );
-}
-
-function sortChatDataByDate(chats: IChat[]) {
-  console.log('sortChatDataByDate 함수 실행');
-  const chatsByDate: { [key: string]: IChat[] } = {};
-
-  chats.forEach((chat) => {
-    const date = dayjs(chat.createdAt).format('YYYY-MM-DD');
-    if (chatsByDate[date] === undefined) {
-      chatsByDate[date] = [chat];
-    } else {
-      chatsByDate[date].push(chat);
-    }
-  });
-
-  return chatsByDate;
 }

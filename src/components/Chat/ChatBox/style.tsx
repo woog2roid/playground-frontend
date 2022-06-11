@@ -8,11 +8,18 @@ export const ChatBoxLayout = styled.div`
   }
 
   & > .chat-room {
+    position: relative;
+
     height: calc(100% - 10px - 55px - 70px);
     padding: 5px 20px 5px 20px;
 
     overflow-y: auto;
     overflow-x: hidden;
+
+    & > .new-chat {
+      position: sticky;
+      bottom: 20px;
+    }
   }
 
   & > .message-input {
