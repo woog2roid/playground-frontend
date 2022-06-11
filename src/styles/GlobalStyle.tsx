@@ -12,7 +12,11 @@ const style = css`
     padding: 0;
     margin: 0;
 
-    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(${BackgroundImage});
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.5)
+      ),
+      url(${BackgroundImage});
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -22,7 +26,7 @@ const style = css`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    -ms-user-select: none; 
+    -ms-user-select: none;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
     -webkit-user-select: none;
@@ -30,7 +34,8 @@ const style = css`
   }
 
   code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
   }
 `;
 

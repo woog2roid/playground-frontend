@@ -3,6 +3,12 @@ import styled from '@emotion/styled';
 export const ChatBoxLayout = styled.div`
   height: 100%;
 
+  -ms-user-select: text;
+  -moz-user-select: text;
+  -khtml-user-select: text;
+  -webkit-user-select: text;
+  user-select: text;
+
   & > .chat-room-info {
     height: 55px;
   }
