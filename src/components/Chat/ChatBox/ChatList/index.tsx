@@ -31,7 +31,7 @@ export default function ChatList({ chatsByDate }: propsType) {
             </Divider>
             {chats.map((chat, index) => {
               if (chat.system) {
-                return <SystemChat data={chat} />;
+                return <SystemChat key={chat.id} data={chat} />;
               }
               if (chat.sender.id === userData?.id) {
                 return (
