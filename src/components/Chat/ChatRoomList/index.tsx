@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import useSWRChatRooms from '@hooks/useSWRChatRooms';
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
 import { IChatRoom } from '@typings/dbTypes';
@@ -11,7 +12,8 @@ import ChatRoomController from './ChatRoomController';
 import { Divider, List, ListItem } from '@mui/material';
 
 export default function Chat() {
-  const { data: chatRoomsData, mutate: mutateChatRoomData } = useSWR<IChatRoom[]>(`/chat-room`, fetcher);
+  const { chatRoomsData, mutateChatRoomsData, postLastReadTimestamp } =
+    useSWRChatRooms();
 
   return (
     <>

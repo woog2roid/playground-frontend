@@ -27,6 +27,7 @@ export interface IFriends {
 export interface IChatRoom {
   title: string;
   id: number;
+  unreads: number;
 }
 
 export interface IChat {

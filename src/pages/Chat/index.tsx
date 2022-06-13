@@ -4,7 +4,11 @@ import { useParams } from 'react-router-dom';
 import useSocket from '@hooks/useSocket';
 import useSWR from 'swr';
 import fetcher from '@utils/swrFetcehr';
-import { IUser } from '@typings/dbTypes';
+import axios from '@utils/axios';
+import { IUser, IChatRoom } from '@typings/dbTypes';
+import useSWRChatRooms from '@hooks/useSWRChatRooms';
+
+import produce from 'immer';
 
 import ChatRoomList from '@components/Chat/ChatRoomList';
 
@@ -17,17 +21,22 @@ import ChatBox from '@components/Chat/ChatBox';
 export default function ChatInbox() {
   const { id: chatRoomId } = useParams();
   const { data: userData } = useSWR<IUser>(`/user/me`, fetcher);
+
+  const { chatRoomsData, mutateChatRoomsData, postLastReadTimestamp } =
+    useSWRChatRooms();
+
   const [socket, disconnectSocket] = useSocket('chat');
 
   React.useEffect(() => {
     const socketData = { userId: userData?.id, chatRoomId: chatRoomId };
     if (chatRoomId !== undefined) {
-      console.log('채팅방 입장', socketData);
       socket?.emit('join', socketData);
+      postLastReadTimestamp();
     }
+
     return () => {
-      console.log('채팅방 나가기', socketData);
       socket?.emit('leave', socketData);
+      postLastReadTimestamp();
     };
   }, [chatRoomId]);
 
@@ -39,7 +48,9 @@ export default function ChatInbox() {
             <ChatRoomList />
           </div>
           <Divider orientation="vertical" />
-          <div className="chat-box">{chatRoomId === undefined ? <></> : <ChatBox />}</div>
+          <div className="chat-box">
+            {chatRoomId === undefined ? <></> : <ChatBox />}
+          </div>
         </ChatComponenetWrapper>
       </MainLayout>
     </>

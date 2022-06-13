@@ -3,9 +3,15 @@ import * as React from 'react';
 import useSWR from 'swr';
 import axios from '@utils/axios';
 import fetcher from '@utils/swrFetcehr';
-import { IUser } from '@typings/dbTypes';
+import { IUser, IChatRoom } from '@typings/dbTypes';
 
-import { Wrapper, Div, SearchWrapper, SearchIconWrapper, StyledInputBase as InputBase } from './style';
+import {
+  Wrapper,
+  Div,
+  SearchWrapper,
+  SearchIconWrapper,
+  StyledInputBase as InputBase,
+} from './style';
 import { Search as SearchIcon } from '@mui/icons-material';
 import Link from '@styles/StyledComponents/NoneDecorationLink';
 import FriendPopover from './FriendPopover';
@@ -13,11 +19,15 @@ import FriendPopover from './FriendPopover';
 export default function TopNav() {
   const { data: userData, error } = useSWR<IUser>(`/user/me`, fetcher);
 
-  const [userDataForFriendPopover, setUserDataForFriendPopover] = React.useState<IUser | null>(null);
-  const [errorDataForFriendPopover, setErrorDataForFriendPopover] = React.useState<String | null>(null);
+  const [userDataForFriendPopover, setUserDataForFriendPopover] =
+    React.useState<IUser | null>(null);
+  const [errorDataForFriendPopover, setErrorDataForFriendPopover] =
+    React.useState<String | null>(null);
 
-  const [anchorElForFriendPopover, setAnchorElForFriendPopover] = React.useState<HTMLElement | null>(null);
-  const [isFriendPopoverOpen, setIsFriendPopoverOpen] = React.useState<boolean>(false);
+  const [anchorElForFriendPopover, setAnchorElForFriendPopover] =
+    React.useState<HTMLElement | null>(null);
+  const [isFriendPopoverOpen, setIsFriendPopoverOpen] =
+    React.useState<boolean>(false);
   const closeFriendPopover = () => {
     setIsFriendPopoverOpen(false);
   };
@@ -69,7 +79,11 @@ export default function TopNav() {
     <>
       <Wrapper>
         <Div>
-          <Link to="/" className="nav-items hover" onClick={() => alert('아직 개발중인 기능입니다 :(')}>
+          <Link
+            to="/"
+            className="nav-items hover"
+            onClick={() => alert('아직 개발중인 기능입니다 :(')}
+          >
             게임
           </Link>
           <Link to="/chat" className="nav-items hover">

@@ -1,13 +1,11 @@
 import * as React from 'react';
 
-import useSWR from 'swr';
-import fetcher from '@utils/swrFetcehr';
 import { IChatRoom } from '@typings/dbTypes';
-import axios from '@utils/axios';
 
 import { useNavigate } from 'react-router-dom';
 
 import { Wrapper } from './style';
+import { Chip } from '@mui/material';
 
 type propsType = {
   data: IChatRoom;
@@ -23,6 +21,11 @@ export default function ChatRoomListItem({ data }: propsType) {
   return (
     <Wrapper onClick={onClick}>
       <span>{data.title}</span>
+      {data.unreads > 0 ? (
+        <Chip label={data.unreads} color="error" variant="outlined" />
+      ) : (
+        <></>
+      )}
     </Wrapper>
   );
 }
